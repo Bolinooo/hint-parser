@@ -5,7 +5,7 @@ import requests
 def validate_response(func):
     """
     Decorator to check availability url
-    :param func: def get_response(url)
+    :param func: get_response(url)-function
     :return: If valid a 200 statuscode, if invalid None
     """
     @functools.wraps(func)
