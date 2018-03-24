@@ -23,5 +23,4 @@ def apply_format(n):
     :param n: number to convert
     :return: string format
     """
-    return format(n, "06")
-
+    return format(n, "05")
