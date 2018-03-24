@@ -1,6 +1,6 @@
-#!/usr/bin/env python
-
-from src.helper import *
+from .decorator import *
+from .url import *
 
 def main():
-    cfg = get_config('config.ini')
+    tmp = get_response("https://www.google.nl")
+
