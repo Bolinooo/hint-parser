@@ -24,3 +24,4 @@ def apply_format(n):
     :return: string format
     """
     return format(n, "06")
+
