@@ -1,6 +1,6 @@
 from .decorator import *
 from .helper import *
-import requests
+
 
 cfg = get_config('config.ini')
 
@@ -13,3 +13,17 @@ def get_response(url):
     """
     return url
 
+
+def build_set(option):
+
+    # http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/13/c/c00001.htm
+
+    base = cfg["URL"]["BASE"]
+    quarter = cfg["SETTINGS"]["QUARTER"]
+    education = cfg["SETTINGS"]["EDUCATION"]
+    option = cfg["OPTIONS"][option]
+
+    url = base + education + "/kw" + quarter + "/"
+
+
+    return url
