@@ -1,11 +1,8 @@
-import unittest
-import requests
-
-from src import decorator
 from src import core
+import unittest
 
 
-class MyDecorators(unittest.TestCase):
+class MyDecoratorTests(unittest.TestCase):
 
     def test_validate_url(self):
         self.assertEqual(core.get_response("https://www.google.nll"), None)
