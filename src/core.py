@@ -1,6 +1,11 @@
 from .decorator import *
+from .helper import *
 from .url import *
 
+
 def main():
-    tmp = get_response("https://www.google.nl")
+
+    cfg = get_config('config.ini')
+
+
 
