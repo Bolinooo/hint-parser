@@ -15,3 +15,12 @@ def get_config(filename):
     if not os.path.isfile(path):
         return None
     return config
+
+
+def apply_format(n):
+    """
+    Function to convert number to string in 6-digit format
+    :param n: number to convert
+    :return: string format
+    """
+    return format(n, "06")
