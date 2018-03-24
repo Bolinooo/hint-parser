@@ -7,7 +7,7 @@ import unittest
 class MyDecoratorTests(unittest.TestCase):
 
     def test_validate_url(self):
-        self.assertEqual(main.get_response("https://www.google.nll"), None)
+        self.assertEqual(main.get_response("https://www.google.nll"), -1)
         self.assertIsInstance(main.get_response("https://www.google.nl"), tuple)
 
 

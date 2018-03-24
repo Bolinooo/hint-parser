@@ -14,5 +14,5 @@ def validate_response(func):
             response = requests.get(url)
             return response, response.status_code
         except Exception as e:
-            return None
+            return -1
     return newfunc
