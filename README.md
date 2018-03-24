@@ -38,4 +38,4 @@ Please note: Only use this command from your project directory. Do not use it fr
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Bolinooo/hint-parser/blob/master/LICENSE) file for details
