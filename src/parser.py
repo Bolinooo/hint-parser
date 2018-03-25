@@ -4,9 +4,5 @@ import requests
 
 def start():
 
-    # links_room = build_set("ROOM")
     links = build_dict()
-    for link in sorted(links):
-        print(link)
-
-
+    extracted_links = [[i for i in links[key]] for key in links.keys()]
