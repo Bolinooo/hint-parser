@@ -21,14 +21,13 @@ def build_dict():
     :return: dict of links for each option
     """
     links = {}
-    connected = True
 
     for option in cfg.options("OPTIONS"):
         for quarter in range(1, 5):
             for week in range(1, 53):
                 print("Checking for {0} in quarter {1} for week {2}".format(option, quarter, week))
                 num = 1
-                while connected:
+                while True:
                     url = build_url(
                         quarter=quarter,
                         option=option,
