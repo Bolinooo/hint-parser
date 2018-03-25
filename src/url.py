@@ -14,12 +14,32 @@ def get_response(url):
     return url
 
 
-def build_set(option):
+def build_dict():
     """
-    Function to build set of links with status code 200 for defined option
-    :param option: Option from config-file: TEACHER, ROOM or COURSE
+    Function to build dict of links with status code 200 for all options in config.ini
     :return: set of links with given option
     """
+
+    links = {}
+    connected = True
+
+    for option in cfg.options("OPTIONS"):
+        for week in range(1, 52):
+            num = 1
+            while connected:
+                url = build_url(option, week, num)
+                resp = get_response("{0}".format(url))
+                if resp[1] != 200:
+                    break
+                else:
+                    if option not in links:
+                        links.setdefault(option, [])
+                    links[option].append(url)
+                num += 1
+    return links
+
+
+def build_url(option, week, num):
 
     base = cfg["URL"]["BASE"]
     quarter = cfg["SETTINGS"]["QUARTER"]
@@ -27,17 +47,5 @@ def build_set(option):
     option = cfg["OPTIONS"][option]
 
     base_url = base + education + "/kw" + quarter + "/"
-    links = set()
-    connected = True
 
-    for week in range(13, 20, 1):
-        num = 1
-        while connected:
-            url = base_url + str(week) + "/" + option + "/" + option + apply_format(num) + ".htm"
-            resp = get_response("{0}".format(url))
-            if resp[1] != 200:
-                connected = False
-            else:
-                links.add(url)
-            num += 1
-    return links
+    return base_url + str(week) + "/" + option + "/" + option + apply_format(num) + ".htm"
