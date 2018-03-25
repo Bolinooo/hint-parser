@@ -4,6 +4,7 @@ from .helper import *
 
 cfg = get_config('config.ini')
 
+
 @validate_response
 def get_response(url):
     """
