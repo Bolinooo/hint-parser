@@ -1,6 +1,6 @@
 from .decorator import *
 from .helper import *
-
+from collections import defaultdict
 
 cfg = get_config('config.ini')
 
@@ -18,9 +18,9 @@ def get_response(url):
 def build_dict():
     """
     Function to build dict of links with status code 200
-    :return: dict of links for each option
+    :return: defaultdict of links for each option
     """
-    links = {}
+    links = defaultdict(list)
 
     for option in cfg.options("OPTIONS"):
         for quarter in range(1, 5):
@@ -38,8 +38,6 @@ def build_dict():
                     if resp[1] != 200:
                         break
                     else:
-                        if option not in links:
-                            links.setdefault(option, [])
                         links[option].append(url)
                     num += 1
     print("Succesfully build dicts with all available links in schedule.")
