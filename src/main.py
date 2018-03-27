@@ -6,6 +6,9 @@ def main():
     links = build_dict()
     extracted_links = [[i for i in links[key]] for key in links.keys()]
 
-    for list in links.values():
-        with open("output.txt", "w") as text_file:
-           text_file.write(list)
+    for link in links.values():
+        print(len(link))
+
+    # teacher = 3504
+    # classes = 2534
+    # rooms = 986
