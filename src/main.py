@@ -3,9 +3,9 @@ from .parser import *
 
 def main():
 
-    # parse()
+    parse()
 
-    links = build_dict()
+    # links = build_dict()
     # extracted_links = [[i for i in links[key]] for key in links.keys()]
 
     # for link in links.values():
