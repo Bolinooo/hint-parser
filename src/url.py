@@ -42,7 +42,7 @@ def build_dict():
                     if resp[1] != 200:
                         break
                     else:
-                        links[option].append(url)
+                        links[option].append(resp[0])
                     num += 1
     print("Succesfully build dicts with all available links in schedule.")
     return links
