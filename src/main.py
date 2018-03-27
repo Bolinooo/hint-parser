@@ -6,6 +6,6 @@ def main():
     links = build_dict()
     extracted_links = [[i for i in links[key]] for key in links.keys()]
 
-    x = 0
-    for item in links.values():
-        print(item)
+    for list in links.values():
+        with open("output.txt", "w") as text_file:
+           text_file.write(list)
