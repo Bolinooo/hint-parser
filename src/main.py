@@ -3,11 +3,13 @@ from .parser import *
 
 def main():
 
-    links = build_dict()
-    extracted_links = [[i for i in links[key]] for key in links.keys()]
+    # parse()
 
-    for link in links.values():
-        print(len(link))
+    links = build_dict()
+    # extracted_links = [[i for i in links[key]] for key in links.keys()]
+
+    # for link in links.values():
+    #     print(len(link))
 
     # teacher = 3504
     # classes = 2534
