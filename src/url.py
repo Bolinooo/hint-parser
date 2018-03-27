@@ -5,14 +5,17 @@ from collections import defaultdict
 cfg = get_config('config.ini')
 
 
-@validate_response
 def get_response(url):
     """
     Function to return response code
     :param url: url to be checked
     :return: result of validate_response
     """
-    return url
+    try:
+        response = requests.get(url)
+        return response, response.status_code
+    except Exception as e:
+        return None
 
 
 def build_dict():
@@ -56,5 +59,5 @@ def build_url(**kwargs):
 
     base_url = base + education + "/kw" + str(kwargs['quarter']) + "/"
 
-    # http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/13/r/r00003.htm
+    # http://misc.hro.nl/roosterdienst/webroosters/CMI/kw1/45/t/t00001.htm
     return base_url + str(kwargs['week']) + "/" + option + "/" + option + apply_format(kwargs['num']) + ".htm"
