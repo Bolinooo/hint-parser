@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+import datetime
 import requests
 
 link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
@@ -74,3 +75,23 @@ def parse():
                 })
 
     return schedule
+
+
+def convert_dates(soup):
+
+    date_text = soup.find_all('font')[-1].get_text(strip=True)
+
+    one_day, one_month, one_year = date_text[0:2], date_text[3:5], date_text[6:10]
+    two_day, two_month, two_year = date_text[13:15], date_text[16:18], date_text[19:23]
+
+    partials = [one_day, one_month, one_year, two_day, two_month, two_year]
+
+    items = [int(i) for i in partials]
+
+    print(items)
+
+    d0 = datetime.date(items[2], items[1], items[0])
+    d1 = datetime.date(items[5], items[4], items[3])
+
+    print(d0 + datetime.timedelta(days=6))
+    print(d1)
