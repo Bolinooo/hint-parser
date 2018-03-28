@@ -3,7 +3,9 @@ from .parser import *
 
 def main():
 
-    parse()
+    item = parse()
+    for nr, i in sorted(enumerate(item)):
+        print(i)
 
     # links = build_dict()
     # extracted_links = [[i for i in links[key]] for key in links.keys()]
