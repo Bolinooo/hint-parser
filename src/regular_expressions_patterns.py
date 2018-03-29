@@ -1,0 +1,11 @@
+
+teacher_pattern = r"[A-Z]{5}$"
+lecture_pattern = r"[A-Z-]{6,}[\d]{2}"
+class_pattern = r"[\w]{5}$"
+room_pattern = r"[A-Z]{1,2}.[\d]{1,2}.[\d]{3}"
+absent_pattern = "-3"
+peercoach_pattern = r"peercoachingslessen"
+vergadering_pattern = r"vergadertijd"
+tentamen_pattern = r"Tentamen"
+lecture_number_pattern = "[\d]{1,4}$"
+extra_info_pattern = "[\d]\)"

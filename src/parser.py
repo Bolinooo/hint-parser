@@ -1,8 +1,8 @@
 from bs4 import BeautifulSoup
 import datetime
 import requests
-
-
+import re
+from .regular_expressions_patterns import *
 link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
 
 
@@ -62,9 +62,9 @@ def parse():
                 rowspans[daynum] = rowspan
 
             texts = daycell.find_all('font')
-
             if texts:
                 info = (item.get_text(strip=True) for item in texts)
+                seperated_info = separate_cell_info(info)
                 time = convert_date(date, daynum)
                 schedule.append({
                     'blok_start': block,
@@ -72,9 +72,10 @@ def parse():
                     'daynum': daynum,
                     'day': time[0],
                     'date': time[1],
-                    'info': [i for i in info]
+                    # 'info': [i for i in info]
+                    'info': seperated_info
                 })
-
+            # print(schedule)
         while daynum < 5:
             daynum += 1
             if rowspans.get(daynum, 0):
@@ -114,3 +115,29 @@ def convert_date(soup_date, daynum):
 
 
 
+def separate_cell_info(cell_info):
+    seperated_info = {}
+    for info in cell_info:
+        if re.match(absent_pattern, info):
+            seperated_info["absent"] = "-3"
+        elif re.match(teacher_pattern, info):
+            seperated_info["teacher"] = info
+        elif re.match(extra_info_pattern, info):
+            seperated_info["extra_info"] = info
+        elif re.match(lecture_pattern, info):
+            seperated_info["lecture"] = info
+        elif re.match(class_pattern, info):
+            seperated_info["class"] = info
+        elif re.match(room_pattern, info):
+            seperated_info["room"] = info
+        elif re.match(vergadering_pattern, info):
+            seperated_info["vergadering"] = info
+        elif re.match(lecture_number_pattern, info):
+            seperated_info["lecture_number"] = info
+        elif re.match(tentamen_pattern, info):
+            seperated_info["tentamen"] = info
+        else:
+            seperated_info["special_event"] = info
+            # raise ValueError('No Match', info)
+
+    return seperated_info
