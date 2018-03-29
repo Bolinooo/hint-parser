@@ -65,12 +65,13 @@ def parse():
 
             if texts:
                 info = (item.get_text(strip=True) for item in texts)
-                current_date = convert_date(date, daynum)
+                time = convert_date(date, daynum)
                 schedule.append({
                     'blok_start': block,
                     'blok_end': block + rowspan,
-                    'day': daynum,
-                    'date': current_date,
+                    'daynum': daynum,
+                    'day': time[0],
+                    'date': time[1],
                     'info': [i for i in info]
                 })
 
@@ -84,10 +85,10 @@ def parse():
 
 def convert_date(soup_date, daynum):
     """
-
+    Function to calculate day and date based on string and daynum
     :param soup_date: string containing the date of schedule page
     :param daynum: int of current day
-    :return:
+    :return: tuple with current day and current date
     """
 
     days = {
@@ -105,19 +106,11 @@ def convert_date(soup_date, daynum):
     items = [int(i) for i in partials]
 
     d0 = datetime.date(year=items[2], month=items[1], day=items[0])
-    d1 = datetime.date(year=items[5], month=items[4], day=items[3])
-
-    monday = d0.day - 1
-    friday = d1.day - 2
-
-    diff = friday - monday
 
     current_day = days[daynum]
-    current_date = d0.day
+    current_date = d0 + datetime.timedelta(days=daynum - 1)
 
-    for i in range(1, diff + 1):
-        print(daynum)
-        if daynum is current_day:
-            print(daynum)
+    return current_day, str(current_date)
+
 
 
