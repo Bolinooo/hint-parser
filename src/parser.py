@@ -57,7 +57,7 @@ def parse():
                 rowspan_offset += 1
                 rowspans[daynum] -= 1
                 daynum += 1
-            rowspan = (int(daycell.get('rowspan', 2)) // 2) - 1
+            rowspan = (int(daycell.get('rowspan', default=2)) // 2) - 1
             if rowspan:
                 rowspans[daynum] = rowspan
 
