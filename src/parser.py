@@ -47,7 +47,6 @@ def parse(response, quarter, option, week):
                     'start_end': timetable[1],
                     'end_begin': timetable[2],
                     'end_end': timetable[3],
-                    'end': block + rowspan,
                     'daynum': daynum,
                     'day': time[0],
                     'date': time[1],
