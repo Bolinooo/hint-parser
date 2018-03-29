@@ -2,13 +2,14 @@ from bs4 import BeautifulSoup
 import datetime
 import requests
 
+
 link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
 
 
 def parse():
     """
     Function to extract data from html schedule
-    :return: Parsed html in ???
+    :return: Parsed html in dictionary
     """
 
     resp = requests.get(link)
@@ -16,14 +17,9 @@ def parse():
 
     title_blue = soup.find("font", {"color": "#0000FF"}).text.strip()
     title_black = soup.find("font", {"size": "4"}).text.strip()
+    date = soup.find_all('font')[-1].get_text(strip=True)
 
-    # days = {
-    #     1: "Maandag",
-    #     2: "Dinsdag",
-    #     3: "Woensdag",
-    #     4: "Donderdag",
-    #     5: "Vrijdag"
-    # }
+    #
     #
     # timetable = {
     #     1: ("8:30", "9:20"),
@@ -53,8 +49,9 @@ def parse():
 
     for block, row in enumerate(rows, 1):
         daycells = row.select('> td')[1:] # skip td met tijd / eerste kolom
-        rowspan_offset = 0
-        for daynum, daycell in enumerate(daycells, 0):
+
+        daynum, rowspan_offset = 0, 0
+        for daynum, daycell in enumerate(daycells, 1):
             daynum += rowspan_offset
             while rowspans.get(daynum, 0):
                 rowspan_offset += 1
@@ -68,31 +65,59 @@ def parse():
 
             if texts:
                 info = (item.get_text(strip=True) for item in texts)
+                current_date = convert_date(date, daynum)
                 schedule.append({
                     'blok_start': block,
                     'blok_end': block + rowspan,
                     'day': daynum,
+                    'date': current_date,
                     'info': [i for i in info]
                 })
+
+        while daynum < 5:
+            daynum += 1
+            if rowspans.get(daynum, 0):
+                rowspans[daynum] -= 1
 
     return schedule
 
 
-def convert_dates(soup):
+def convert_date(soup_date, daynum):
+    """
 
-    date_text = soup.find_all('font')[-1].get_text(strip=True)
+    :param soup_date: string containing the date of schedule page
+    :param daynum: int of current day
+    :return:
+    """
 
-    one_day, one_month, one_year = date_text[0:2], date_text[3:5], date_text[6:10]
-    two_day, two_month, two_year = date_text[13:15], date_text[16:18], date_text[19:23]
+    days = {
+        1: "Maandag",
+        2: "Dinsdag",
+        3: "Woensdag",
+        4: "Donderdag",
+        5: "Vrijdag"
+    }
+
+    one_day, one_month, one_year = soup_date[0:2], soup_date[3:5], soup_date[6:10]
+    two_day, two_month, two_year = soup_date[13:15], soup_date[16:18], soup_date[19:23]
 
     partials = [one_day, one_month, one_year, two_day, two_month, two_year]
-
     items = [int(i) for i in partials]
 
-    print(items)
+    d0 = datetime.date(year=items[2], month=items[1], day=items[0])
+    d1 = datetime.date(year=items[5], month=items[4], day=items[3])
 
-    d0 = datetime.date(items[2], items[1], items[0])
-    d1 = datetime.date(items[5], items[4], items[3])
+    monday = d0.day - 1
+    friday = d1.day - 2
 
-    print(d0 + datetime.timedelta(days=6))
-    print(d1)
+    diff = friday - monday
+
+    current_day = days[daynum]
+    current_date = d0.day
+
+    for i in range(1, diff + 1):
+        print(daynum)
+        if daynum is current_day:
+            print(daynum)
+
+
