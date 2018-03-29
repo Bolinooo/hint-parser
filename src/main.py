@@ -13,7 +13,7 @@ def main():
 
     # Crawl all available links
     pool = ThreadPool(4)
-    result = pool.map(build_dict, cfg.options('OPTIONS'))
+    result = pool.map(build_urls, cfg.options('OPTIONS'))
 
     # Map the parse()-function over each response in each option
     data = []

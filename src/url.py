@@ -19,7 +19,7 @@ def get_response(url):
         return None
 
 
-def build_dict(option):
+def build_urls(option):
     """
     Function to build dict of links with statuscode 200
     :return: dict of links for each option
