@@ -19,32 +19,32 @@ def get_response(url):
         return None
 
 
-def build_dict():
+def build_dict(option):
     """
-    Function to build dict of links with status code 200
+    Function to build dict of links with statuscode 200
     :return: dict of links for each option
     """
+
     links = defaultdict(list)
 
-    for option in cfg.options("OPTIONS"):
-        for quarter in range(1, 5):
-            for week in range(1, 53):
-                print("Checking for {0} in quarter {1} for week {2}".format(option, quarter, week))
-                num = 1
-                while True:
-                    url = build_url(
-                        quarter=quarter,
-                        option=option,
-                        week=week,
-                        num=num
-                    )
-                    resp = get_response("{0}".format(url))
-                    if resp[1] != 200:
-                        break
-                    else:
-                        links[option].append(resp[0])
-                    num += 1
-    print("Succesfully build dicts with all available links in schedule.")
+    for quarter in range(1, 5):
+        for week in range(1, 53):
+            print("Checking for {0} in quarter {1} for week {2}".format(option, quarter, week))
+            num = 1
+            while True:
+                url = build_url(
+                    quarter=quarter,
+                    option=option,
+                    week=week,
+                    num=num
+                )
+                resp = get_response("{0}".format(url))
+                if resp[1] != 200:
+                    break
+                else:
+                    links[option].append([resp[0], quarter, option, week])
+                num += 1
+    print("Succesfully build dict for {option}".format(option=option))
     return links
 
 
@@ -59,6 +59,11 @@ def build_url(**kwargs):
     option = cfg["OPTIONS"][kwargs['option']]
 
     base_url = base + education + "/kw" + str(kwargs['quarter']) + "/"
+    week = str(kwargs['week'])
+    slash = "/"
+    num = apply_format(kwargs['num'])
+    extension = ".htm"
 
-    # http://misc.hro.nl/roosterdienst/webroosters/CMI/kw1/45/t/t00001.htm
-    return base_url + str(kwargs['week']) + "/" + option + "/" + option + apply_format(kwargs['num']) + ".htm"
+    url = [base_url, week, slash, option, slash, option, num, extension]
+
+    return "".join(url)
