@@ -6,8 +6,8 @@ import unittest
 
 class MyUrlTest(unittest.TestCase):
 
-    def test_build_dict(self):
-        self.assertEqual(url.build_dict(), defaultdict(list))
+    def test_build_urls(self):
+        self.assertEqual(url.build_urls('TEACHER'), defaultdict(list))
 
 
 if __name__ == "__main__":
