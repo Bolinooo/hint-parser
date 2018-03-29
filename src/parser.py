@@ -6,7 +6,7 @@ from .regular_expressions_patterns import *
 link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
 
 
-def parse(response, quarter, option, week):
+def parse(response):
     """
     Function to extract data from html schedule
     :return: Parsed html in dictionary
