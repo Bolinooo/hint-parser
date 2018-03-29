@@ -27,8 +27,8 @@ def build_dict(option):
 
     links = defaultdict(list)
 
-    for quarter in range(1, 2):
-        for week in range(44, 46):
+    for quarter in range(1, 5):
+        for week in range(1, 53):
             print("Checking for {0} in quarter {1} for week {2}".format(option, quarter, week))
             num = 1
             while True:
@@ -59,5 +59,11 @@ def build_url(**kwargs):
     option = cfg["OPTIONS"][kwargs['option']]
 
     base_url = base + education + "/kw" + str(kwargs['quarter']) + "/"
+    week = str(kwargs['week'])
+    slash = "/"
+    num = apply_format(kwargs['num'])
+    extension = ".htm"
 
-    return base_url + str(kwargs['week']) + "/" + option + "/" + option + apply_format(kwargs['num']) + ".htm"
+    url = [base_url, week, slash, option, slash, option, num, extension]
+
+    return "".join(url)
