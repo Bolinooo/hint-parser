@@ -1,30 +1,28 @@
+from multiprocessing.dummy import Pool as ThreadPool
 from .parser import *
 from .url import *
 
+
 def main():
+    """
+    Main flow of the parser
+    1) Crawl all available links
+    2) Parse all the valid responses
+    3) ...
+    """
 
-    link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
+    # Crawl all available links
+    pool = ThreadPool(4)
+    result = pool.map(build_dict, cfg.options('OPTIONS'))
 
+    # Map the parse()-function over each response in each option
+    data = []
+    for option in result:
+        data += [parse(resp[0][0], resp[0][1], resp[0][2], resp[0][3]) for category, resp in option.items()]
 
-    resp = requests.get(link)
-    soup = BeautifulSoup(resp.content, 'html.parser')
+    print(data)
 
-    convert_dates(soup)
-
-    # item = parse()
-
-    #
-    #
-    #
-    # for nr, i in sorted(enumerate(item)):
-    #     print(i)
-
-    # links = build_dict()
-
-    # extracted_links = [[i for i in links[key]] for key in links.keys()]
-
-    # for link in links.values():
-    #     print(len(link))
+    print(len(data))
 
     # teacher = 3504
     # classes = 2534
