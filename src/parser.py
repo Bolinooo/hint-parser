@@ -19,8 +19,6 @@ def parse():
     title_black = soup.find("font", {"size": "4"}).text.strip()
     date = soup.find_all('font')[-1].get_text(strip=True)
 
-    #
-    #
     # timetable = {
     #     1: ("8:30", "9:20"),
     #     2: ("9:20", "10:10"),
@@ -39,17 +37,13 @@ def parse():
     #     15: ("21:10", "22:00"),
     # }
 
-    #      pak de eerste tabel    vind alle 31 rijen, niet recursief   stappen met 2
     rows = soup.find_all('table')[0].find_all('tr', recursive=False)[1:30:2]
 
-    # rowspans bijhouden
     rowspans = {}
-    # informatie van cellen komt hierin
     schedule = []
 
     for block, row in enumerate(rows, 1):
-        daycells = row.select('> td')[1:] # skip td met tijd / eerste kolom
-
+        daycells = row.select('> td')[1:]
         daynum, rowspan_offset = 0, 0
         for daynum, daycell in enumerate(daycells, 1):
             daynum += rowspan_offset
@@ -100,9 +94,7 @@ def convert_date(soup_date, daynum):
     }
 
     one_day, one_month, one_year = soup_date[0:2], soup_date[3:5], soup_date[6:10]
-    two_day, two_month, two_year = soup_date[13:15], soup_date[16:18], soup_date[19:23]
-
-    partials = [one_day, one_month, one_year, two_day, two_month, two_year]
+    partials = [one_day, one_month, one_year]
     items = [int(i) for i in partials]
 
     d0 = datetime.date(year=items[2], month=items[1], day=items[0])
