@@ -1,8 +1,9 @@
+from .regular_expressions_patterns import *
 from bs4 import BeautifulSoup
 import datetime
-import requests
 import re
-from .regular_expressions_patterns import *
+
+
 link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
 
 
