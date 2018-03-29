@@ -27,7 +27,7 @@ def build_dict(option):
 
     links = defaultdict(list)
 
-    for quarter in range(1, 5):
+    for quarter in range(1, 2):
         for week in range(1, 53):
             print("Checking for {0} in quarter {1} for week {2}".format(option, quarter, week))
             num = 1

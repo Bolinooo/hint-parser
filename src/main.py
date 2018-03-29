@@ -18,7 +18,7 @@ def main():
     # Map the parse()-function over each response in each option
     data = []
     for option in result:
-        data += [parse(resp[0][0], resp[0][1], resp[0][2], resp[0][3]) for category, resp in option.items()]
+        data += [parse(resp[0][0]) for category, resp in option.items()]
 
     print(data)
 
