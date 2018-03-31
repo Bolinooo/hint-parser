@@ -44,6 +44,8 @@ def parse(response):
                 time = convert_date(date, daynum)
                 timetable = convert_timetable(block, block + rowspan)
                 schedule.append({
+                    'abbrevation' : title_blue,
+                    'teacher': title_black,
                     'start_begin': timetable[0],
                     'start_end': timetable[1],
                     'end_begin': timetable[2],
