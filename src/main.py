@@ -1,6 +1,8 @@
 from multiprocessing.dummy import Pool as ThreadPool
 from .parser import *
 from .url import *
+import time
+
 
 
 def main():
@@ -11,19 +13,20 @@ def main():
     3) ...
     """
 
+    start_time = time.time()
     # Crawl all available links
     pool = ThreadPool(4)
-    result = pool.map(build_urls, cfg.options('OPTIONS'))
+    links = pool.map(build_urls, cfg.options('OPTIONS'))
+
+    urls, data = links[0][0], links[0][1]
 
     # Map the parse()-function over each response in each option
-    data = []
-    for option in result:
-        data += [parse(resp[0][0]) for category, resp in option.items()]
+    parse_list = []
+    for option, list in urls.items():
+        parse_list += [parse(response) for response in list]
 
-    print(data)
 
-    print(len(data))
-
+    print("--- %s seconds ---" % (time.time() - start_time))
     # teacher = 3504
     # classes = 2534
     # rooms = 986
