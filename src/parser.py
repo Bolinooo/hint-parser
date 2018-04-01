@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from .regular_expressions_patterns import *
 from bs4 import BeautifulSoup
 import datetime
@@ -45,7 +47,6 @@ def parse(response):
                 timetable = convert_timetable(block, block + rowspan)
                 schedule.append({
                     'abbrevation' : title_blue,
-                    'teacher': title_black,
                     'start_begin': timetable[0],
                     'start_end': timetable[1],
                     'end_begin': timetable[2],
@@ -129,6 +130,34 @@ def convert_timetable(start, end):
     end_end = timetable[end][1]
 
     return start_begin, start_end, end_begin, end_end
+
+
+def convert_dicts(parsed_data, data):
+
+
+    print(dict(data))
+    print(dict(parsed_data))
+
+    d1 = dict(data)
+    d2 = dict(parsed_data)
+
+    d1_list = d1.values()
+    d2_list = d2.values()
+
+    lists = [d1_list, d2_list]
+    tmp = list(zip(*lists))
+
+    for item in tmp:
+        print(len(item[0]))
+        print(len(item[1]))
+
+
+    # all_data = list(zip(parsed_data, data))
+    # for i in all_data:
+    #     print(i)
+
+
+
 
 
 def separate_cell_info(cell_info):
