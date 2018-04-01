@@ -133,21 +133,21 @@ def convert_timetable(start, end):
 
 
 def convert_dicts(parsed_data, data):
+    """
+    Function to combine parsed schedule data and quarter/week-info to asingle dictionary
+    :param parsed_data: defaultdict with nested lists containing separated dicts with crawled data per schedule
+    :param data: defaultdict with nested lists containing week and quarter per schedule
+    :return: dictionary to convert to json
+    """
 
 
-    print(dict(data))
-    print(dict(parsed_data))
 
-    d1 = dict(data)
-    d2 = dict(parsed_data)
+    lists = [dict(parsed_data).values(), dict(data).values()]
+    print(len(dict(parsed_data).keys()))
+    result = {}
 
-    d1_list = d1.values()
-    d2_list = d2.values()
 
-    lists = [d1_list, d2_list]
-    tmp = list(zip(*lists))
-
-    for item in tmp:
+    for item in zip(*lists):
         print(len(item[0]))
         print(len(item[1]))
 
