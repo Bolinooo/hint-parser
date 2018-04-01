@@ -28,7 +28,8 @@ def main():
 
     for dd in links:
         for k, v in dd[1].items():
-            counters[k].append(len(v))
+            counters[k] = len(v)
+
 
     # convert_dicts(parsed_items, data)
 
