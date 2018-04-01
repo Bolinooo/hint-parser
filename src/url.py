@@ -20,14 +20,13 @@ def get_response(url):
 
 def build_urls(option):
     """
-    Function to build dict of links with statuscode 200
-    :return: dict of links for each option
+    Function to build data structure of responses with statuscode 200 and side information
+    :return: Two defaultdicts, (1) containing all responses (2) containing week and quarter
     """
-
     urls = defaultdict(list)
     data = defaultdict(list)
 
-    for quarter in range(1, 5):
+    for quarter in range(1, 2):
         for week in range(1, 53):
             print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
             num = 1
@@ -37,7 +36,7 @@ def build_urls(option):
                 if resp[1] != 200:
                     break
                 else:
-                    urls[option].append(resp[0])
+                    urls[option].append([resp[0]])
                     data[option].append([quarter,week])
                 num += 1
     print("Succesfully build dict for {option}".format(option=option))
