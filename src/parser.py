@@ -128,7 +128,7 @@ def convert_timetable(start, end):
     end_begin = timetable[end][0]
     end_end = timetable[end][1]
 
-    return (start_begin, start_end, end_begin, end_end)
+    return start_begin, start_end, end_begin, end_end
 
 
 def separate_cell_info(cell_info):
