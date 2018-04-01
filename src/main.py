@@ -22,7 +22,7 @@ def main():
     parsed_items = []
     counters = {}
 
-    for dd in links: ## dd = defaultdict
+    for dd in links: # dd = defaultdict
         # Step 2) Parse all the valid responses
         for k, v in dd[0].items():
             parsed_items.append([parse(resp[0]) for resp in v])
