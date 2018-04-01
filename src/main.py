@@ -4,7 +4,6 @@ from .url import *
 import time
 
 
-
 def main():
     """
     Main flow of the parser
@@ -14,17 +13,24 @@ def main():
     """
 
     start_time = time.time()
-    # Crawl all available links
+
+    # Crawl all available links using threads
     pool = ThreadPool(4)
     links = pool.map(build_urls, cfg.options('OPTIONS'))
 
-    urls, data = links[0][0], links[0][1]
+    # Map the parse()-function over each response from each option
+    parsed_items = []
+    counters = {}
 
-    # Map the parse()-function over each response in each option
-    parse_list = []
-    for option, list in urls.items():
-        parse_list += [parse(response) for response in list]
+    for dd in links:
+        for k, v in dd[0].items():
+            parsed_items.append([parse(resp[0]) for resp in v])
 
+    for dd in links:
+        for k, v in dd[1].items():
+            counters[k].append(len(v))
+
+    # convert_dicts(parsed_items, data)
 
     print("--- %s seconds ---" % (time.time() - start_time))
     # teacher = 3504
