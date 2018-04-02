@@ -33,4 +33,5 @@ def convert_dict(dictionary):
     :param dictionary: Dictionary with all results
     :return: .json-file
     """
+    assert type(dictionary) is dict
     return json.dumps(dictionary, sort_keys=True)
