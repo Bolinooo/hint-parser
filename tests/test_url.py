@@ -14,10 +14,10 @@ class MyUrlTest(unittest.TestCase):
     bad = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw1/14/t/t00050.htm"
 
     def setUp(self):
-        print("Testing method: {0}".format(self._testMethodName[5:]))
+        print("Testing method: {0}".format(self._testMethodName))
 
     def tearDown(self):
-        print("Succesfully tested: {0}".format(self._testMethodName[5:]))
+        print("Succesfully tested: {0}".format(self._testMethodName))
 
     def test_build_url(self):
         self.assertEqual(
