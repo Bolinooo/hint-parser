@@ -1,7 +1,7 @@
 import configparser
 import os
 import json
-
+import datetime
 
 def get_config(filename):
     """
@@ -27,6 +27,17 @@ def apply_format(n):
     return format(n, "05")
 
 
+def build_filename():
+    """
+    Function to build filename based on current day and month
+    :return: 'schedule_day_month'-string
+    """
+    current = datetime.datetime.now()
+    time_format = current.strftime('%d-%m')
+    order = ['schedule_', time_format]
+    return "".join(order)
+
+
 def convert_dict(dictionary):
     """
     Function to convert dictionary to a json file using built-in module
@@ -34,4 +45,7 @@ def convert_dict(dictionary):
     :return: .json-file
     """
     assert type(dictionary) is dict
-    return json.dumps(dictionary, sort_keys=True)
+    filename = build_filename()
+    with open('%s.json' % filename, 'w') as file:
+        file.write(json.dumps(dictionary, sort_keys=True))
+    file.close()
