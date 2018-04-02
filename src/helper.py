@@ -1,5 +1,6 @@
 import configparser
 import os
+import json
 
 
 def get_config(filename):
@@ -24,3 +25,12 @@ def apply_format(n):
     :return: string format
     """
     return format(n, "05")
+
+
+def convert_dict(dictionary):
+    """
+    Function to convert dictionary to a json file using built-in module
+    :param dictionary: Dictionary with all results
+    :return: .json-file
+    """
+    return json.dumps(dictionary, sort_keys=True)
