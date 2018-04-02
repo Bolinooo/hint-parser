@@ -137,7 +137,9 @@ def compare_dicts(parsed_items, parsed_counters):
     :param data: defaultdict with nested lists containing week and quarter per schedule
     :return: dictionary to convert to json
     """
+
     result = {}
+    print("Starting to build final dictionary")
     for l1 in parsed_items:
         for option, (length, l2) in parsed_counters.items():
             if len(l1) == length:
@@ -150,6 +152,7 @@ def compare_dicts(parsed_items, parsed_counters):
                         result[option].setdefault(quarter, {})
                         result[option][quarter].setdefault(week, [])
                         result[option][quarter][week].append(item[0])
+    print("Succesfully builded final dictionary")
     return result
 
 
