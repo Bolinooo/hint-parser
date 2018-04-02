@@ -26,7 +26,7 @@ def build_urls(option):
     urls = defaultdict(list)
     data = defaultdict(list)
 
-    for quarter in range(1, 2):
+    for quarter in range(1, 5):
         for week in range(1, 53):
             print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
             num = 1
