@@ -38,7 +38,8 @@ def main():
 
     # Step 5) Parse final dict to a json
     convert_dict(final)
-    print("Parser is finished. It took {seconds}".format(seconds=time.time() - start_time))
+    print("Parser is finished. It took {seconds} seconds.".format(seconds=round(time.time() - start_time)))
+
     # teacher = 3504
     # classes = 2534
     # rooms = 986
