@@ -47,5 +47,5 @@ def convert_dict(dictionary):
     assert type(dictionary) is dict
     filename = build_filename()
     with open('%s.json' % filename, 'w') as file:
-        file.write(json.dumps(dictionary, sort_keys=True))
+        file.write(json.dumps(dictionary, indent=4, sort_keys=True))
     file.close()
