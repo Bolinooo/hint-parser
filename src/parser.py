@@ -1,12 +1,10 @@
-from collections import defaultdict
-
 from .regular_expressions_patterns import *
+from .helper import get_config
 from bs4 import BeautifulSoup
 import datetime
 import re
 
-
-link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
+cfg = get_config('config.ini')
 
 
 def parse(response):
@@ -132,32 +130,27 @@ def convert_timetable(start, end):
     return start_begin, start_end, end_begin, end_end
 
 
-def convert_dicts(parsed_data, data):
+def compare_dicts(parsed_items, parsed_counters):
     """
     Function to combine parsed schedule data and quarter/week-info to asingle dictionary
     :param parsed_data: defaultdict with nested lists containing separated dicts with crawled data per schedule
     :param data: defaultdict with nested lists containing week and quarter per schedule
     :return: dictionary to convert to json
     """
-
-
-
-    lists = [dict(parsed_data).values(), dict(data).values()]
-    print(len(dict(parsed_data).keys()))
     result = {}
-
-
-    for item in zip(*lists):
-        print(len(item[0]))
-        print(len(item[1]))
-
-
-    # all_data = list(zip(parsed_data, data))
-    # for i in all_data:
-    #     print(i)
-
-
-
+    for l1 in parsed_items:
+        for option, (length, l2) in parsed_counters.items():
+            if len(l1) == length:
+                for item in zip(l1, l2):
+                    full = bool(item[0])
+                    if full:
+                        quarter = item[1][0]
+                        week = item[1][1]
+                        result.setdefault(option, {})
+                        result[option].setdefault(quarter, {})
+                        result[option][quarter].setdefault(week, [])
+                        result[option][quarter][week].append(item[0])
+    return result
 
 
 def separate_cell_info(cell_info):
