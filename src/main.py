@@ -11,6 +11,7 @@ def main():
     2) Parse all the valid responses
     3) Store length of list for each option
     4) Convert them to dict
+    5) Parse final dict to a json
     """
 
     start_time = time.time()
@@ -20,21 +21,24 @@ def main():
     links = pool.map(build_urls, cfg.options('OPTIONS'))
 
     parsed_items = []
-    counters = {}
+    parsed_counters = {}
 
     for dd in links: # dd = defaultdict
         # Step 2) Parse all the valid responses
         for k, v in dd[0].items():
+            parsed_counters[k] = len(v)
             parsed_items.append([parse(resp[0]) for resp in v])
         # Step 3) Store length of list for each option
         for k, v in dd[1].items():
-            counters[k] = (len(v), v)
+            if len(v) == parsed_counters[k]:
+                parsed_counters[k] = (len(v), v)
 
+    # Step 4) Convert them to dict
+    final = compare_dicts(parsed_items, parsed_counters)
 
-    # Step 4) TODO = Convert them to dict (work in progress)
-    # convert_dicts(parsed_items, data)
-
-    print("--- %s seconds ---" % (time.time() - start_time))
+    # Step 5) Parse final dict to a json
+    convert_dict(final)
+    print("Parser is finished. It took {seconds}".format(seconds=time.time() - start_time))
     # teacher = 3504
     # classes = 2534
     # rooms = 986
