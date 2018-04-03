@@ -1,4 +1,5 @@
 from .regular_expressions_patterns import *
+from collections import namedtuple
 from .helper import get_config
 from bs4 import BeautifulSoup
 import datetime
@@ -173,10 +174,19 @@ def compare_dicts(parsed_items, parsed_counters):
 
 
 def separate_cell_info(cell_info):
-    seperated_info = {}
+
+    separate_cell_info = {}
     for info in cell_info:
-        for pattern in patterns:
-            if pattern:
+        count = len(info)
+        category = call_patterns(info, count)
+        separate_cell_info[category] = info
+    return separate_cell_info
+
+
+    # seperated_info = {}
+    # for info in cell_info:
+    #     for pattern in patterns:
+    #         if pattern:
         # if re.match(teacher_pattern, info):
         #     seperated_info["teacher"] = info
         # elif re.match(extra_info_pattern, info):
@@ -193,4 +203,20 @@ def separate_cell_info(cell_info):
         #     seperated_info["event"] = info
         #     # raise ValueError('No Match', info)
 
-    return seperated_info
+
+
+def call_patterns(info, count):
+
+
+
+    patterns = {
+        "category1": {
+            'teacher': "[A-Z]{5}$"
+        }
+    }
+
+    print(patterns)
+    for k, v in patterns:
+
+        if re.match("r" + v, info):
+            return k
