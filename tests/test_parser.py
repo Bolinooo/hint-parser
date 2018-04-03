@@ -21,7 +21,7 @@ class MyParserTest(unittest.TestCase):
         self.assertNotEqual(parser.convert_date(self.__class__.date, 1), ('Dinsdag', '2018-04-02'))
         self.assertEqual(parser.convert_date(self.__class__.date, 1), ('Maandag', '2018-04-02'))
         self.assertEqual(parser.convert_date(self.__class__.date, 5), ('Vrijdag', '2018-04-06'))
-        self.assertNotEqual(parser.convert_date(self.__class__.date, 5), ('Vrijdag', '2018-04-07'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 5), ('Zaterdag', '2018-04-07'))
 
     def test_convert_timetable(self):
         self.assertNotEqual(parser.convert_timetable(1, 3), ('8:30', '9:20', '09:20', '10:30'))
