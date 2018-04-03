@@ -138,8 +138,10 @@ def compare_dicts(parsed_items, parsed_counters):
     :return: dictionary to convert to json
     """
 
-    result = {}
     print("Starting to build final dictionary")
+
+    result = {}
+    amount = 0
     for l1 in parsed_items:
         for option, (length, l2) in parsed_counters.items():
             if len(l1) == length:
@@ -152,7 +154,11 @@ def compare_dicts(parsed_items, parsed_counters):
                         result[option].setdefault(quarter, {})
                         result[option][quarter].setdefault(week, [])
                         result[option][quarter][week].append(item[0])
+                    else:
+                        amount += 1
+
     print("Succesfully builded final dictionary")
+    print("{amount} schedules were empty.".format(amount=amount))
     return result
 
 

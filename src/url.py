@@ -37,7 +37,7 @@ def build_urls(option):
                     break
                 else:
                     urls[option].append([resp[0]])
-                    data[option].append([quarter,week])
+                    data[option].append([quarter, week])
                 num += 1
     print("Succesfully build dict for {option}".format(option=option))
     return urls, data
