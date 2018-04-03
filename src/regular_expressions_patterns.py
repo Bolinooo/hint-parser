@@ -1,37 +1,27 @@
 teacher_pattern = r"[A-Z]{5}$"
-lecture_pattern = r"[A-Z]{6}[\d]{2}"
-hp_pattern = r"HP-voorlichting"
-room_pattern = r"[A-Z]{1,2}\.[\d]{1,2}\.[\d]{3}"
-extra_info_pattern = r"[\d]\)"
-lecture_number_pattern = r"[\d]{1,4}$"
+# list = ["INFPRJ00-3", "TINPRJ0178","CCOCKE10R3","HP-voorlichting", "INFLAB01", "CMD-DC01-3"]
+lecture_pattern = r"[A-Z]{6}\d{2,4}(-\d)?([A-Z]\d)?|HP-voorlichting|[A-Z]{3}-[A-Z]{2}\d{2}-\d"
+# list = ["WD.01.003", "H.5.314"]
+room_pattern = r"[A-Z]{1,2}\.\d{1,2}\.\d{3}"
+extra_info_pattern = r"\d\)"
+lecture_number_pattern = r"\d{1,4}$"
 # class has even more types
-class_pattern = r"[\w]{5}$"
+class_pattern = r"\w{5}$"
+# list = ["COD2", "COV1D", "INF2D","DCMD1A", "DINF1", "CMD1A", "TI1A"]
+class_pattern1 = r"[A-Z]{2,4}\d{1}[A-Z]{0,1}$"
+# list = ["BO-COM", "BO-TI", "CMD-BO","COD-AD3", "CMD-DT01-6", "CMT-BO", "COV3-HP"]
+class_pattern2 = r"[A-Z]{2,3}\d?-\w{2,4}-?\d?"
+# CMDLABEXP, CMDLABPT
+class_cmd_lab = r"CMDLAB[A-Z]{1,2}"
 
-# 2 ltr with a -
-# BO-COM, BO-TI
-class_2 = r"[A-Z]{2}-"
-# 3 ltr with a -
-# CMD-BO, COD-AD3
-class_3 = r"[A-Z]{3}-"
-# 3 ltr, 1 nr
-# COD2
-class_4 = r"[A-Z]{3}[\d]{1}"
-# this one is empty so maybe this is not needed
-# COV3-HP
-class_5 = r"[A-Z]{3}[\d]{1}-"
-# 4 letters, 1 nr, 1 letter
-# DCMD1A
-class_6 = r"[A-Z]{4}[\d]{1}[A-Z]{1}$"
+# specific patterns
 class_cmd = r"cmd"
 class_marjo = r"marjo"
 class_opbouw = r"opbouw"
 class_overloop = r"overloop"
-class_rescmd= r"RESCMD"
+class_rescmd = r"RESCMD"
 class_tent = r"TENT"
-class_uitloop_lokaal= r"uitloop lokaal"
-# 4 ltr, 1 digit
-# DINF1
-class_7 = r"[A-Z]{4}[\d]{1}$"
+class_uitloop_lokaal = r"uitloop lokaal"
 #
 # KEU AAR01, KEU SOU01K
 class_8 = r""
@@ -41,16 +31,3 @@ class_9 = r""
 class_10 = r""
 # MINIED1C
 class_11 = r""
-# TI1A
-class_12 = r""
-# CMD-DT01-6
-class_13 = r""
-# CMDLABEXP, CMDLABPT
-class_14 = r""
-# CMT-BO
-class_15 = r""
-# 3 letters, 1 number, 1 letter
-# CMD1A, COV1D
-class_1 = r"[A-Z]{3}[\d]{1}[A-Z]{1}$"
-
-

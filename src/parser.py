@@ -41,6 +41,7 @@ def parse(response):
             if texts:
                 info = (item.get_text(strip=True) for item in texts)
                 seperated_info = separate_cell_info(info)
+                print(seperated_info)
                 time = convert_date(date, daynum)
                 timetable = convert_timetable(block, block + rowspan)
                 schedule.append({
@@ -165,20 +166,22 @@ def compare_dicts(parsed_items, parsed_counters):
 def separate_cell_info(cell_info):
     seperated_info = {}
     for info in cell_info:
-        if re.match(teacher_pattern, info):
-            seperated_info["teacher"] = info
-        elif re.match(extra_info_pattern, info):
-            seperated_info["extra_info"] = info
-        elif re.match(lecture_pattern, info) or re.match(hp_pattern, info):
-            seperated_info["lecture"] = info
-        elif re.match(class_pattern, info):
-            seperated_info["class"] = info
-        elif re.match(room_pattern, info):
-            seperated_info["room"] = info
-        elif re.match(lecture_number_pattern, info):
-            seperated_info["lecture_number"] = info
-        else:
-            seperated_info["event"] = info
-            # raise ValueError('No Match', info)
+        for pattern in patterns:
+            if pattern:
+        # if re.match(teacher_pattern, info):
+        #     seperated_info["teacher"] = info
+        # elif re.match(extra_info_pattern, info):
+        #     seperated_info["extra_info"] = info
+        # elif re.match(lecture_pattern, info):
+        #     seperated_info["lecture"] = info
+        # # elif re.match(class_pattern, info):
+        # #     seperated_info["class"] = info
+        # elif re.match(room_pattern, info):
+        #     seperated_info["room"] = info
+        # elif re.match(lecture_number_pattern, info):
+        #     seperated_info["lecture_number"] = info
+        # else:
+        #     seperated_info["event"] = info
+        #     # raise ValueError('No Match', info)
 
     return seperated_info
