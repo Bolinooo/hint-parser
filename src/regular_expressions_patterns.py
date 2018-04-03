@@ -2,7 +2,8 @@ teacher_pattern = r"[A-Z]{5}$"
 # list = ["INFPRJ00-3", "TINPRJ0178","CCOCKE10R3","HP-voorlichting", "INFLAB01", "CMD-DC01-3"]
 lecture_pattern = r"[A-Z]{6}\d{2,4}(-\d)?([A-Z]\d)?|HP-voorlichting|[A-Z]{3}-[A-Z]{2}\d{2}-\d"
 # list = ["WD.01.003", "H.5.314"]
-room_pattern = r"[A-Z]{1,2}\.\d{1,2}\.\d{3}"
+location_pattern = r"[A-Z]{1,2}\.\d{1,2}\.\d{3}"
+
 extra_info_pattern = r"\d\)"
 lecture_number_pattern = r"\d{1,4}$"
 # class has even more types
@@ -13,15 +14,9 @@ class_pattern1 = r"[A-Z]{2,4}\d{1}[A-Z]{0,1}$"
 class_pattern2 = r"[A-Z]{2,3}\d?-\w{2,4}-?\d?"
 # CMDLABEXP, CMDLABPT
 class_cmd_lab = r"CMDLAB[A-Z]{1,2}"
-
 # specific patterns
-class_cmd = r"cmd"
-class_marjo = r"marjo"
-class_opbouw = r"opbouw"
-class_overloop = r"overloop"
-class_rescmd = r"RESCMD"
-class_tent = r"TENT"
-class_uitloop_lokaal = r"uitloop lokaal"
+class_specific = r"cmd | marjo | opbouw | overloop| RESCMD| TENT | uitloop lokaal"
+
 #
 # KEU AAR01, KEU SOU01K
 class_8 = r""
