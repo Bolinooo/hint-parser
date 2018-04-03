@@ -1,11 +1,9 @@
-
 teacher_pattern = r"[A-Z]{5}$"
-lecture_pattern = r"[A-Z-]{6,}[\d]{2}"
+lecture_pattern = r"[A-Z]{6}[\d]{2}"
+hp_pattern = r"HP-voorlichting"
+room_pattern = r"[A-Z]{1,2}\.[\d]{1,2}\.[\d]{3}"
+extra_info_pattern = r"[\d]\)"
+lecture_number_pattern = r"[\d]{1,4}$"
+# class has even more types
 class_pattern = r"[\w]{5}$"
-room_pattern = r"[A-Z]{1,2}.[\d]{1,2}.[\d]{3}"
-absent_pattern = "-3"
-peercoach_pattern = r"peercoachingslessen"
-vergadering_pattern = r"vergadertijd"
-tentamen_pattern = r"Tentamen"
-lecture_number_pattern = "[\d]{1,4}$"
-extra_info_pattern = "[\d]\)"
+
