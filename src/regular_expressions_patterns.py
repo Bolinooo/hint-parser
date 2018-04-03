@@ -13,15 +13,9 @@ class_pattern1 = r"[A-Z]{2,4}\d{1}[A-Z]{0,1}$"
 class_pattern2 = r"[A-Z]{2,3}\d?-\w{2,4}-?\d?"
 # CMDLABEXP, CMDLABPT
 class_cmd_lab = r"CMDLAB[A-Z]{1,2}"
-
 # specific patterns
-class_cmd = r"cmd"
-class_marjo = r"marjo"
-class_opbouw = r"opbouw"
-class_overloop = r"overloop"
-class_rescmd = r"RESCMD"
-class_tent = r"TENT"
-class_uitloop_lokaal = r"uitloop lokaal"
+class_specific = r"cmd | marjo | opbouw | overloop| RESCMD| TENT | uitloop lokaal"
+
 #
 # KEU AAR01, KEU SOU01K
 class_8 = r""
