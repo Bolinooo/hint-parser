@@ -104,3 +104,6 @@ ENV/
 .idea/misc.xml
 .idea/hint-parser.iml
 .idea/vcs.xml
+
+*.json
+!spec/*.json

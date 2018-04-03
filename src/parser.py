@@ -1,12 +1,13 @@
+from .regular_expressions_patterns import *
+from .helper import get_config
 from bs4 import BeautifulSoup
 import datetime
-import requests
 import re
-from .regular_expressions_patterns import *
-link = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
+
+cfg = get_config('config.ini')
 
 
-def parse(response, quarter, option, week):
+def parse(response):
     """
     Function to extract data from html schedule
     :return: Parsed html in dictionary
@@ -43,6 +44,7 @@ def parse(response, quarter, option, week):
                 time = convert_date(date, daynum)
                 timetable = convert_timetable(block, block + rowspan)
                 schedule.append({
+                    'abbrevation' : title_blue,
                     'start_begin': timetable[0],
                     'start_end': timetable[1],
                     'end_begin': timetable[2],
@@ -121,15 +123,37 @@ def convert_timetable(start, end):
     }
 
     start_begin = timetable[start][0]
-    start_end   = timetable[start][1]
+    start_end = timetable[start][1]
     end_begin = timetable[end][0]
-    end_end   = timetable[end][1]
+    end_end = timetable[end][1]
 
-    return (start_begin, start_end, end_begin, end_end)
-
-
+    return start_begin, start_end, end_begin, end_end
 
 
+def compare_dicts(parsed_items, parsed_counters):
+    """
+    Function to combine parsed schedule data and quarter/week-info to asingle dictionary
+    :param parsed_data: defaultdict with nested lists containing separated dicts with crawled data per schedule
+    :param data: defaultdict with nested lists containing week and quarter per schedule
+    :return: dictionary to convert to json
+    """
+
+    result = {}
+    print("Starting to build final dictionary")
+    for l1 in parsed_items:
+        for option, (length, l2) in parsed_counters.items():
+            if len(l1) == length:
+                for item in zip(l1, l2):
+                    full = bool(item[0])
+                    if full:
+                        quarter = item[1][0]
+                        week = item[1][1]
+                        result.setdefault(option, {})
+                        result[option].setdefault(quarter, {})
+                        result[option][quarter].setdefault(week, [])
+                        result[option][quarter][week].append(item[0])
+    print("Succesfully builded final dictionary")
+    return result
 
 
 def separate_cell_info(cell_info):

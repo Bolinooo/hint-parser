@@ -1,6 +1,7 @@
 from multiprocessing.dummy import Pool as ThreadPool
 from .parser import *
 from .url import *
+import time
 
 
 def main():
@@ -8,21 +9,36 @@ def main():
     Main flow of the parser
     1) Crawl all available links
     2) Parse all the valid responses
-    3) ...
+    3) Store length of list for each option
+    4) Convert them to dict
+    5) Parse final dict to a json
     """
 
-    # Crawl all available links
+    start_time = time.time()
+
+    # Step 1) Crawl all available links
     pool = ThreadPool(4)
-    result = pool.map(build_dict, cfg.options('OPTIONS'))
+    links = pool.map(build_urls, cfg.options('OPTIONS'))
 
-    # Map the parse()-function over each response in each option
-    data = []
-    for option in result:
-        data += [parse(resp[0][0], resp[0][1], resp[0][2], resp[0][3]) for category, resp in option.items()]
+    parsed_items = []
+    parsed_counters = {}
 
-    print(data)
+    for dd in links: # dd = defaultdict
+        # Step 2) Parse all the valid responses
+        for k, v in dd[0].items():
+            parsed_counters[k] = len(v)
+            parsed_items.append([parse(resp[0]) for resp in v])
+        # Step 3) Store length of list for each option
+        for k, v in dd[1].items():
+            if len(v) == parsed_counters[k]:
+                parsed_counters[k] = (len(v), v)
 
-    print(len(data))
+    # Step 4) Convert them to dict
+    final = compare_dicts(parsed_items, parsed_counters)
+
+    # Step 5) Parse final dict to a json
+    convert_dict(final)
+    print("Parser is finished. It took {seconds} seconds.".format(seconds=round(time.time() - start_time)))
 
     # teacher = 3504
     # classes = 2534

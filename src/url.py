@@ -1,7 +1,6 @@
-from .helper import *
 from collections import defaultdict
+from .helper import *
 import requests
-
 
 cfg = get_config('config.ini')
 
@@ -14,38 +13,34 @@ def get_response(url):
     """
     try:
         response = requests.get(url)
-        return response, response.status_code
     except Exception as e:
         return None
+    return response, response.status_code
 
 
-def build_dict(option):
+def build_urls(option):
     """
-    Function to build dict of links with statuscode 200
-    :return: dict of links for each option
+    Function to build data structure of responses with statuscode 200 and side information
+    :return: Two defaultdicts, (1) containing all responses (2) containing week and quarter
     """
-
-    links = defaultdict(list)
+    urls = defaultdict(list)
+    data = defaultdict(list)
 
     for quarter in range(1, 5):
         for week in range(1, 53):
-            print("Checking for {0} in quarter {1} for week {2}".format(option, quarter, week))
+            print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
             num = 1
             while True:
-                url = build_url(
-                    quarter=quarter,
-                    option=option,
-                    week=week,
-                    num=num
-                )
+                url = build_url(quarter=quarter, option=option, week=week, num=num)
                 resp = get_response("{0}".format(url))
                 if resp[1] != 200:
                     break
                 else:
-                    links[option].append([resp[0], quarter, option, week])
+                    urls[option].append([resp[0]])
+                    data[option].append([quarter,week])
                 num += 1
     print("Succesfully build dict for {option}".format(option=option))
-    return links
+    return urls, data
 
 
 def build_url(**kwargs):
@@ -58,12 +53,13 @@ def build_url(**kwargs):
     education = cfg["SETTINGS"]["EDUCATION"]
     option = cfg["OPTIONS"][kwargs['option']]
 
-    base_url = base + education + "/kw" + str(kwargs['quarter']) + "/"
     week = str(kwargs['week'])
+    base_quarter = '/kw'
+    quarter = str(kwargs['quarter'])
     slash = "/"
     num = apply_format(kwargs['num'])
     extension = ".htm"
 
-    url = [base_url, week, slash, option, slash, option, num, extension]
+    url = [base, education, base_quarter, quarter, slash, week, slash, option, slash, option, num, extension]
 
     return "".join(url)
