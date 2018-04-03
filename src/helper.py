@@ -80,7 +80,9 @@ def extract_item(parsed_dict):
     :param parsed_dict: Parsed dictionary
     :return: Iterable with items that should be in row
     """
-    subject = parsed_dict["info"].get("event", parsed_dict["info"].get("lecture", "reservering"))
+    print(parsed_dict)
+    subject = parsed_dict["info"].get("event",
+              parsed_dict["info"].get("lecture", "reservering"))
     start_date = parsed_dict.get("date", "not available")
     start_time = parsed_dict.get("start_begin", "not available")
     end_date = parsed_dict.get("date", "not available")

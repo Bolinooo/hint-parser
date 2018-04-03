@@ -175,33 +175,30 @@ def compare_dicts(parsed_items, parsed_counters):
 
 def separate_cell_info(cell_info):
 
-    separate_cell_info = {}
+
+
+    seperated_info = {}
     for info in cell_info:
-        count = len(info)
-        category = call_patterns(info, count)
-        separate_cell_info[category] = info
-    return separate_cell_info
+        if re.match(teacher_pattern, info):
+            seperated_info["teacher"] = info
+        elif re.match(extra_info_pattern, info):
+            seperated_info["extra_info"] = info
+        elif re.match(lecture_pattern, info):
+            seperated_info["lecture"] = info
+        # elif re.match(class_pattern, info):
+        #     seperated_info["class"] = info
+        elif re.match(location_pattern, info):
+            dotSeperatedParts = info.split(".")
+            seperated_info["building"] = dotSeperatedParts[0]
+            seperated_info["floor"] = dotSeperatedParts[1]
+            seperated_info["room"] = dotSeperatedParts[2]
+        elif re.match(lecture_number_pattern, info):
+            seperated_info["lecture_number"] = info
+        else:
+            seperated_info["event"] = info
+            # raise ValueError('No Match', info)
+    return seperated_info
 
-
-    # seperated_info = {}
-    # for info in cell_info:
-    #     for pattern in patterns:
-    #         if pattern:
-        # if re.match(teacher_pattern, info):
-        #     seperated_info["teacher"] = info
-        # elif re.match(extra_info_pattern, info):
-        #     seperated_info["extra_info"] = info
-        # elif re.match(lecture_pattern, info):
-        #     seperated_info["lecture"] = info
-        # # elif re.match(class_pattern, info):
-        # #     seperated_info["class"] = info
-        # elif re.match(room_pattern, info):
-        #     seperated_info["room"] = info
-        # elif re.match(lecture_number_pattern, info):
-        #     seperated_info["lecture_number"] = info
-        # else:
-        #     seperated_info["event"] = info
-        #     # raise ValueError('No Match', info)
 
 
 
