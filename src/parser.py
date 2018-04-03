@@ -159,26 +159,20 @@ def compare_dicts(parsed_items, parsed_counters):
 def separate_cell_info(cell_info):
     seperated_info = {}
     for info in cell_info:
-        if re.match(absent_pattern, info):
-            seperated_info["absent"] = "-3"
-        elif re.match(teacher_pattern, info):
+        if re.match(teacher_pattern, info):
             seperated_info["teacher"] = info
         elif re.match(extra_info_pattern, info):
             seperated_info["extra_info"] = info
-        elif re.match(lecture_pattern, info):
+        elif re.match(lecture_pattern, info) or re.match(hp_pattern, info):
             seperated_info["lecture"] = info
         elif re.match(class_pattern, info):
             seperated_info["class"] = info
         elif re.match(room_pattern, info):
             seperated_info["room"] = info
-        elif re.match(vergadering_pattern, info):
-            seperated_info["vergadering"] = info
         elif re.match(lecture_number_pattern, info):
             seperated_info["lecture_number"] = info
-        elif re.match(tentamen_pattern, info):
-            seperated_info["tentamen"] = info
         else:
-            seperated_info["special_event"] = info
+            seperated_info["event"] = info
             # raise ValueError('No Match', info)
 
     return seperated_info
