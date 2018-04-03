@@ -107,3 +107,6 @@ ENV/
 
 *.json
 !spec/*.json
+
+*.csv
+!spec/*.csv

@@ -48,8 +48,10 @@ def parse(response):
                     'abbrevation' : title_blue,
                     'start_begin': timetable[0],
                     'start_end': timetable[1],
+                    'start_block': block,
                     'end_begin': timetable[2],
                     'end_end': timetable[3],
+                    'end_block': block + rowspan,
                     'daynum': daynum,
                     'day': time[0],
                     'date': time[1],
@@ -133,22 +135,29 @@ def convert_timetable(start, end):
 
 def compare_dicts(parsed_items, parsed_counters):
     """
-    Function to combine parsed schedule data and quarter/week-info to asingle dictionary
-    :param parsed_data: defaultdict with nested lists containing separated dicts with crawled data per schedule
-    :param data: defaultdict with nested lists containing week and quarter per schedule
-    :return: dictionary to convert to json
+    Function to combine parsed schedule data and quarter/week-info to a single dictionary
+    :param parsed_items: defaultdict with nested lists containing separated dicts with crawled data per schedule
+    :param parsed_counters: defaultdict with nested lists containing week and quarter per schedule
+    :return: clean dictionary
     """
 
     print("Starting to build final dictionary")
 
+    # parsed_items = [[{geparsde shit}], [{}]]
+    #
+    # parsed_counters {
+    #     'teacher': (68, [[1,45], [1,45]])
+    # }
+
+
     result = {}
-    amount = 0
+    empty_schedules = 0
     for l1 in parsed_items:
         for option, (length, l2) in parsed_counters.items():
             if len(l1) == length:
                 for item in zip(l1, l2):
-                    full = bool(item[0])
-                    if full:
+                    schedule = bool(item[0])
+                    if schedule:
                         quarter = item[1][0]
                         week = item[1][1]
                         result.setdefault(option, {})
@@ -156,10 +165,10 @@ def compare_dicts(parsed_items, parsed_counters):
                         result[option][quarter].setdefault(week, [])
                         result[option][quarter][week].append(item[0])
                     else:
-                        amount += 1
+                        empty_schedules += 1
 
     print("Succesfully builded final dictionary")
-    print("{amount} schedules were empty.".format(amount=amount))
+    print("{amount} schedules were empty.".format(amount=empty_schedules))
     return result
 
 
