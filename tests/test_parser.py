@@ -10,7 +10,6 @@ class MyParserTest(unittest.TestCase):
     resp = requests.get(url)
     soup = BeautifulSoup(resp.content, 'html.parser')
     date = soup.find_all('font')[-1].get_text(strip=True)
-# 02-04-2018 - 08-04-2018 Instituut CMI
 
     def setUp(self):
         print("Testing method: {0}".format(self._testMethodName))
