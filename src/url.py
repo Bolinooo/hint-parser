@@ -18,16 +18,16 @@ def get_response(url):
     return response, response.status_code
 
 
-def build_urls(option):
+def build_responses(option):
     """
     Function to build data structure of responses with statuscode 200 and side information
     :return: Two defaultdicts, (1) containing all responses (2) containing week and quarter
     """
-    urls = defaultdict(list)
-    data = defaultdict(list)
+    responses = defaultdict(list)
+    timedata = defaultdict(list)
 
-    for quarter in range(1, 5):
-        for week in range(1, 53):
+    for quarter in range(1, 2, 1):
+        for week in range(44, 46, 1):
             print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
             num = 1
             while True:
@@ -36,11 +36,11 @@ def build_urls(option):
                 if resp[1] != 200:
                     break
                 else:
-                    urls[option].append([resp[0]])
-                    data[option].append([quarter, week])
+                    responses[option].append([resp[0]])
+                    timedata[option].append([quarter, week])
                 num += 1
     print("Succesfully build dict for {option}".format(option=option))
-    return urls, data
+    return responses, timedata
 
 
 def build_url(**kwargs):

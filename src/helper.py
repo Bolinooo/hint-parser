@@ -4,6 +4,7 @@ import json
 import csv
 import datetime
 
+
 def get_config(filename):
     """
     Function to obtain the config.ini-file
@@ -35,8 +36,8 @@ def build_filename():
     """
     current = datetime.datetime.now()
     time_format = current.strftime('%d-%m')
-    order = ['schedule_', time_format]
-    return "".join(order)
+    name = ['schedule_', time_format]
+    return "".join(name)
 
 
 def convert_json(dictionary):
@@ -66,8 +67,9 @@ def convert_csv(dictionary):
             for k2, v2 in v1.items(): # quarter
                 for k3, v3 in v2.items(): # week
                     for item in v3:
-                        for combi in item:
-                            row = extract_item(combi)
+                        for cell in item:
+                            row = extract_item(cell)
+                            print(",".join(row))
                             writer.writerow(row)
     csvfile.close()
 
