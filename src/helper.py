@@ -53,10 +53,29 @@ def convert_json(dictionary):
     file.close()
 
 
-def convert_csv(dictionary):
+def strip_csv(csvfile):
+    """
+    Function to strip csv records to a new csv with unique values
+    :param csv: Initial csv file
+    :return: New csv file with unique values
+    """
+    filename = build_filename()
+    with open(csvfile.name, 'r') as in_file, open('%s_unique.csv' % filename,'w') as out_file:
+        seen = set()
+        for line in in_file:
+            seen.add(line)
+
+        for line in seen:
+            out_file.write(line)
+
+
+def convert_csv(dictionary, items, skip_empty=False, unique=False):
     """
     Function to convert final dictionary to a json file using built-in module
     :param dictionary: Dictionary with all results
+    :param items: List of individual options to get from each schedule item
+    :param skip_empty: Boolean to set of rows with empty values should be skipped
+    :param unique: Boolean to set of all values should be unique
     :return: .csv-file in root dir
     """
     assert type(dictionary) is dict
@@ -68,43 +87,43 @@ def convert_csv(dictionary):
                 for k3, v3 in v2.items(): # week
                     for item in v3:
                         for cell in item:
-                            row = extract_item(cell)
-                            writer.writerow(row)
+                            row = extract_item(cell, items, skip_empty)
+                            if row:
+                                writer.writerow(row)
+
+    if unique:
+        strip_csv(csvfile)
+
     csvfile.close()
 
 
-def extract_item(parsed_dict):
+def extract_item(parsed_dict, items, skip_empty=False):
     """
     Function to parse a dictionary item into a single row
     :param parsed_dict: Parsed dictionary
+    :param items: List of individual options to get from each schedule item
+    :param skip_empty: Boolean to set of rows with empty values should be skipped
     :return: Iterable with items that should be in row
     """
-    subject = parsed_dict["info"].get("event",
-              parsed_dict["info"].get("lecture", "reservering"))
-    start_date = parsed_dict.get("date", "not available")
-    start_time = parsed_dict.get("start_begin", "not available")
-    end_date = parsed_dict.get("date", "not available")
-    end_time = parsed_dict.get("end_end", "not available")
-    start_block = parsed_dict.get("start_block", "not available")
-    end_block = parsed_dict.get("end_block", "not available")
-    building = parsed_dict["info"].get("building", "No building")
-    floor = parsed_dict["info"].get("floor", "No floor")
-    room = parsed_dict["info"].get("room", "No room")
+    possibilities = {
+        'subject': parsed_dict["info"].get("event", parsed_dict["info"].get("lecture", "Not available")),
+        'start_date': parsed_dict.get("date", "empty"),
+        'start_time': parsed_dict.get("start_begin", "empty"),
+        'end_date': parsed_dict.get("date", "empty"),
+        'end_time': parsed_dict.get("end_end", "empty"),
+        'start_block': parsed_dict.get("start_block", "empty"),
+        'end_block': parsed_dict.get("end_block", "empty"),
+        'building': parsed_dict["info"].get("building", "empty"),
+        'floor': parsed_dict["info"].get("floor", "empty"),
+        'room': parsed_dict["info"].get("room", "empty"),
+        'allday': str(True) if parsed_dict.get("start_block") is 1 and parsed_dict.get("end_block") is 15 else str(False)
+    }
 
-    allday = False
-    if start_block is 1 and end_block is 15:
-        allday = True
+    final = []
+    for key in items:
+        if key in possibilities:
+            if skip_empty and possibilities[key] is "empty":
+                break
+            final.append(possibilities[key])
 
-    final = [
-        subject,
-        start_date,
-        start_time,
-        end_date,
-        end_time,
-        str(allday),
-        "-",
-        building,
-        floor,
-        room
-    ]
     return final
