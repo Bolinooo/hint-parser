@@ -162,10 +162,17 @@ def compare_dicts(parsed_items, parsed_counters):
     print("{amount} schedules were empty.".format(amount=empty_schedules))
     return result
 
-
+"""
+Function to give each value in 
+:param cell_info: generated object with a range
+:return: category(key) of the reg_ex_dict and the matched value
+"""
 def separate_cell_info(cell_info):
     seperated_info = {}
     for info in cell_info:
+        # data contains
+        # 1. a key from reg_ex_dict
+        # 2. the value of the result after executing regular expressions on info
         data = call_patterns(info)
         if data is None:
             seperated_info["event"] = info
@@ -179,7 +186,12 @@ def separate_cell_info(cell_info):
 
     return seperated_info
 
-def call_patterns(info):
+"""
+Function to get the category(key) and the matched value after executing a regular expression
+:param info: info is a string
+:return: category(key) of the reg_ex_dict and the matched value
+"""
+def call_patterns (info):
     for category in reg_ex_dict:
         for pattern in reg_ex_dict[category]:
             match = re.match(pattern, info)

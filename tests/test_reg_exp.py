@@ -1,8 +1,14 @@
 from src import reg_ex_patterns as file
 
 import unittest
-import  re
+import re
 
+"""
+Function to facilitate the tests in MyRegExTest class
+:param list: list with strings of cases that should be tested
+:param pattern: a regular expression
+:return: list with the result of all matches
+"""
 def test_helper(list, pattern):
     newList = []
     for item in list:
@@ -10,7 +16,7 @@ def test_helper(list, pattern):
         if(matched == None):
             raise ValueError(item + ' does not match the pattern')
         newList.append(matched.group())
-    return  newList
+    return newList
 
 class MyRegExTest(unittest.TestCase):
     def test_teacher(self):
@@ -18,14 +24,28 @@ class MyRegExTest(unittest.TestCase):
         matches = test_helper(list, file.teacher_pattern)
         self.assertEqual(list, matches)
 
+        special = "H.5.314, H"
+        m = re.match(file.location_pattern, special)
+        self.assertEqual(m.group(), "H.5.314")
+
     def test_extra_info(self):
         list = ["1)", "9)"]
         matches = test_helper(list, file.extra_info_pattern)
         self.assertEqual(list, matches)
 
-    def test_lecture(self):
-        list = ["INFPRJ00-3", "TINPRJ0178","CCOCKE10R3","HP-voorlichting", "INFLAB01", "CMD-DC01-3"]
-        matches = test_helper(list, file.lecture_pattern)
+    def test_lecture1(self):
+        list = ["INFPRJ00-3", "TINPRJ0178","CCOCKE10R3","INFLAB01"]
+        matches = test_helper(list, file.lecture_pattern1)
+        self.assertEqual(list, matches)
+
+    def test_lecture2(self):
+        list = ["CMD-DC01-3"]
+        matches = test_helper(list, file.lecture_pattern2)
+        self.assertEqual(list, matches)
+
+    def test_lecture_specific(self):
+        list = ["HP-voorlichting"]
+        matches = test_helper(list, file.lecture_specific)
         self.assertEqual(list, matches)
 
     def test_location(self):
@@ -44,17 +64,17 @@ class MyRegExTest(unittest.TestCase):
 
     def test_class1(self):
         list = ["COD2", "COV1D", "INF2D", "DCMD1A", "DINF1", "CMD1A", "TI1A"]
-        matches = test_helper(list, file.class1_pattern)
+        matches = test_helper(list, file.class_pattern1)
         self.assertEqual(list, matches)
 
     def test_class2(self):
         list = ["BO-COM", "BO-TI", "CMD-BO", "COD-AD3", "CMD-DT01-6", "CMT-BO", "COV3-HP"]
-        matches = test_helper(list, file.class2_pattern)
+        matches = test_helper(list, file.class_pattern2)
         self.assertEqual(list, matches)
 
     def test_class3(self):
-        list = ["MINBOD02A", "MINBOD02","MINBOD02-3", "MINIED1C", "MIN ENS02", "MIN IED1B", "MIN SMO", "KEU AAR01", "KEU SOU01K"]
-        matches = test_helper(list, file.class3_pattern)
+        list = ["MINBOD02A", "MINBOD02", "MINIED1C", "MIN ENS02", "MIN IED1B", "MIN SMO", "KEU AAR01", "KEU SOU01K"]
+        matches = test_helper(list, file.class_pattern3)
         self.assertEqual(list, matches)
 
     def test_class_cmd_lab(self):
