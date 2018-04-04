@@ -39,7 +39,13 @@ def main():
     final = compare_dicts(parsed_items, parsed_counters)
 
     # Step 5) Parse final dict to a json
-    convert_csv(final)
+    options = [
+        'building',
+        'floor',
+        'room'
+    ]
+    convert_csv(final, options, skip_empty=True, unique=True)
+
     print("Parser is finished. It took {seconds} seconds.".format(seconds=round(time.time() - start_time)))
 
     # teacher = 3504

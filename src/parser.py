@@ -42,7 +42,6 @@ def parse(response):
             if texts:
                 info = (item.get_text(strip=True) for item in texts)
                 seperated_info = separate_cell_info(info)
-                print(seperated_info)
                 time = convert_date(date, daynum)
                 timetable = convert_timetable(block, block + rowspan)
                 schedule.append({
@@ -141,16 +140,7 @@ def compare_dicts(parsed_items, parsed_counters):
     :param parsed_counters: defaultdict with nested lists containing week and quarter per schedule
     :return: clean dictionary
     """
-
     print("Starting to build final dictionary")
-
-    # parsed_items = [[{geparsde shit}], [{}]]
-    #
-    # parsed_counters {
-    #     'teacher': (68, [[1,45], [1,45]])
-    # }
-
-
     result = {}
     empty_schedules = 0
     for l1 in parsed_items:
@@ -174,21 +164,20 @@ def compare_dicts(parsed_items, parsed_counters):
 
 
 def separate_cell_info(cell_info):
-
-    separate_info = {}
+    seperated_info = {}
     for info in cell_info:
         data = call_patterns(info)
         if data is None:
-            separate_info["event"] = info
+            seperated_info["event"] = info
         elif data[0] == "location":
             dotSeperatedParts = data[1].split(".")
-            separate_info["building"] = dotSeperatedParts[0]
-            separate_info["floor"] = dotSeperatedParts[1]
-            separate_info["room"] = dotSeperatedParts[2]
+            seperated_info["building"] = dotSeperatedParts[0]
+            seperated_info["floor"] = dotSeperatedParts[1]
+            seperated_info["room"] = dotSeperatedParts[2]
         else:
-            separate_info[data[0]] = info
+            seperated_info[data[0]] = info
 
-    return separate_info
+    return seperated_info
 
 def call_patterns(info):
     for category in reg_ex_dict:

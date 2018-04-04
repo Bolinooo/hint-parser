@@ -27,7 +27,7 @@ def build_responses(option):
     timedata = defaultdict(list)
 
     for quarter in range(1, 2, 1):
-        for week in range(44, 46, 1):
+        for week in range(1, 53, 1):
             print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
             num = 1
             while True:
