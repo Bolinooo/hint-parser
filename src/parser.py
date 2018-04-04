@@ -1,4 +1,4 @@
-from .regular_expressions_patterns import *
+from .reg_ex_patterns import *
 from collections import namedtuple
 from .helper import get_config
 from bs4 import BeautifulSoup
@@ -175,46 +175,24 @@ def compare_dicts(parsed_items, parsed_counters):
 
 def separate_cell_info(cell_info):
 
-    # separate_cell_info = {}
-    # for info in cell_info:
-    #     count = len(info)
-    #     category = call_patterns(info, count)
-    #     separate_cell_info[category] = info
-    # return separate_cell_info
-
-
-    seperated_info = {}
+    separate_info = {}
     for info in cell_info:
-        if re.match(teacher_pattern, info):
-            seperated_info["teacher"] = info
-        elif re.match(extra_info_pattern, info):
-            seperated_info["extra_info"] = info
-        elif re.match(lecture_pattern, info):
-            seperated_info["lecture"] = info
-        # elif re.match(class_pattern, info):
-        #     seperated_info["class"] = info
-        elif re.match(location_pattern, info):
-            dotSeperatedParts = info.split(".")
-            seperated_info["building"] = dotSeperatedParts[0]
-            seperated_info["floor"] = dotSeperatedParts[1]
-            seperated_info["room"] = dotSeperatedParts[2]
-        elif re.match(lecture_number_pattern, info):
-            seperated_info["lecture_number"] = info
+        data = call_patterns(info)
+        if data is None:
+            separate_info["event"] = info
+        elif data[0] == "location":
+            dotSeperatedParts = data[1].split(".")
+            separate_info["building"] = dotSeperatedParts[0]
+            separate_info["floor"] = dotSeperatedParts[1]
+            separate_info["room"] = dotSeperatedParts[2]
         else:
-            seperated_info["event"] = info
-            # raise ValueError('No Match', info)
-    return seperated_info
+            separate_info[data[0]] = info
 
+    return separate_info
 
-# def call_patterns(info, count):
-#     patterns = {
-#         "category1": {
-#             'teacher': "[A-Z]{5}$"
-#         }
-#     }
-#
-#     print(patterns)
-#     for k, v in patterns:
-#
-#         if re.match("r" + v, info):
-#             return k
+def call_patterns(info):
+    for category in reg_ex_dict:
+        for pattern in reg_ex_dict[category]:
+            match = re.match(pattern, info)
+            if match:
+                return category, match.group()

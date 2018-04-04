@@ -2,7 +2,9 @@ from src import parser
 import unittest
 
 
-class MyRegularExpressionTest(unittest.TestCase):
+class SeparateCellInfoTest(unittest.TestCase):
+
+
     def test_teacher(self):
         # correct
         string = "CALDJ"
@@ -58,35 +60,35 @@ class MyRegularExpressionTest(unittest.TestCase):
         result = parser.separate_cell_info(dict)
         self.assertNotEqual(result, {'lecture': string})
 
-    def test_room(self):
-        # correct
-        string = "WD.01.003"
-        dict = {string}
-        result = parser.separate_cell_info(dict)
-        self.assertEqual(result, {'room': string})
-
-        string = "H.5.314"
-        dict = {string}
-        result = parser.separate_cell_info(dict)
-        self.assertEqual(result, {'room': string})
-
-        # not enough letters
-        string = "H.5.31"
-        dict = {string}
-        result = parser.separate_cell_info(dict)
-        self.assertNotEqual(result, {'room': string})
-
-        # too many letters
-        string = "H.501.314"
-        dict = {string}
-        result = parser.separate_cell_info(dict)
-        self.assertNotEqual(result, {'room': string})
-
-        # invalid
-        string = "Ha5,314"
-        dict = {string}
-        result = parser.separate_cell_info(dict)
-        self.assertNotEqual(result, {'room': string})
+    # def test_room(self):
+    #     # correct
+    #     string = "WD.01.003"
+    #     dict = {string}
+    #     result = parser.separate_cell_info(dict)
+    #     self.assertEqual(result, {'room': string})
+    #
+    #     string = "H.5.314"
+    #     dict = {string}
+    #     result = parser.separate_cell_info(dict)
+    #     self.assertEqual(result, {'room': string})
+    #
+    #     # not enough letters
+    #     string = "H.5.31"
+    #     dict = {string}
+    #     result = parser.separate_cell_info(dict)
+    #     self.assertNotEqual(result, {'room': string})
+    #
+    #     # too many letters
+    #     string = "H.501.314"
+    #     dict = {string}
+    #     result = parser.separate_cell_info(dict)
+    #     self.assertNotEqual(result, {'room': string})
+    #
+    #     # invalid
+    #     string = "Ha5,314"
+    #     dict = {string}
+    #     result = parser.separate_cell_info(dict)
+    #     self.assertNotEqual(result, {'room': string})
 
     def test_lecture_number(self):
         # correct
