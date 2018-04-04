@@ -69,7 +69,6 @@ def convert_csv(dictionary):
                     for item in v3:
                         for cell in item:
                             row = extract_item(cell)
-                            print(",".join(row))
                             writer.writerow(row)
     csvfile.close()
 
@@ -80,7 +79,6 @@ def extract_item(parsed_dict):
     :param parsed_dict: Parsed dictionary
     :return: Iterable with items that should be in row
     """
-    print(parsed_dict)
     subject = parsed_dict["info"].get("event",
               parsed_dict["info"].get("lecture", "reservering"))
     start_date = parsed_dict.get("date", "not available")
@@ -89,7 +87,9 @@ def extract_item(parsed_dict):
     end_time = parsed_dict.get("end_end", "not available")
     start_block = parsed_dict.get("start_block", "not available")
     end_block = parsed_dict.get("end_block", "not available")
-    location = parsed_dict["info"].get("room", "No room found")
+    building = parsed_dict["info"].get("building", "No building")
+    floor = parsed_dict["info"].get("floor", "No floor")
+    room = parsed_dict["info"].get("room", "No room")
 
     allday = False
     if start_block is 1 and end_block is 15:
@@ -103,6 +103,8 @@ def extract_item(parsed_dict):
         end_time,
         str(allday),
         "-",
-        location
+        building,
+        floor,
+        room
     ]
     return final

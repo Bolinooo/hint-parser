@@ -36,6 +36,8 @@ def main():
                 print("Succesfully stored additional data [quarter, week] for {option}".format(option=option))
 
     # Step 4) Convert them to dict
+
+
     final = compare_dicts(parsed_items, parsed_counters)
 
     # Step 5) Parse final dict to a json
