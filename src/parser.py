@@ -41,11 +41,11 @@ def parse(response):
             texts = daycell.find_all('font')
             if texts:
                 info = (item.get_text(strip=True) for item in texts)
-                seperated_info = separate_cell_info(info)
+                seperated_info = get_separated_cell_info(info)
                 time = convert_date(date, daynum)
                 timetable = convert_timetable(block, block + rowspan)
                 schedule.append({
-                    'abbrevation' : title_blue,
+                    'abbrevation': title_blue,
                     'start_begin': timetable[0],
                     'start_end': timetable[1],
                     'start_block': block,
@@ -162,18 +162,19 @@ def compare_dicts(parsed_items, parsed_counters):
     print("{amount} schedules were empty.".format(amount=empty_schedules))
     return result
 
-"""
-Function to give each value in 
-:param cell_info: generated object with a range
-:return: category(key) of the reg_ex_dict and the matched value
-"""
-def separate_cell_info(cell_info):
+
+def get_separated_cell_info(cell_info):
+    """
+    Function to give each value in
+    :param cell_info: generator that behaves like an iterator
+    :return: category(key) of the reg_ex_dict and the matched value
+    """
     seperated_info = {}
     for info in cell_info:
         # data contains
         # 1. a key from reg_ex_dict
         # 2. the value of the result after executing regular expressions on info
-        data = call_patterns(info)
+        data = get_category_and_result(info)
         if data is None:
             seperated_info["event"] = info
         elif data[0] == "location":
@@ -182,16 +183,17 @@ def separate_cell_info(cell_info):
             seperated_info["floor"] = dotSeperatedParts[1]
             seperated_info["room"] = dotSeperatedParts[2]
         else:
-            seperated_info[data[0]] = info
+            seperated_info[data[0]] = data[1]
 
     return seperated_info
 
-"""
-Function to get the category(key) and the matched value after executing a regular expression
-:param info: info is a string
-:return: category(key) of the reg_ex_dict and the matched value
-"""
-def call_patterns (info):
+
+def get_category_and_result(info):
+    """
+    Function to get the category(key) and the matched value after executing a regular expression
+    :param info: info is a string
+    :return: category(key) of the reg_ex_dict and the matched value
+    """
     for category in reg_ex_dict:
         for pattern in reg_ex_dict[category]:
             match = re.match(pattern, info)

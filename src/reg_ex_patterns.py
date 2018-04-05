@@ -9,7 +9,7 @@ extra_info_pattern = r"[0-9]\)"
 
 # list = ["INFPRJ00-3", "TINPRJ0178","CCOCKE10R3", "INFLAB01"]
 # 6 letters, 2-4 digits, maybe(1 dash, digit) or maybe(1 letter, 1 digit)
-lecture_pattern1 = r"[A-Z]{6}[0-9]{2,4}((-[0-9])|([A-Z][0-9]))?"
+lecture_pattern1 = r"(?!MIN)[A-Z]{6}[0-9]{2,4}((-[0-9])|([A-Z][0-9]))?"
 # list = ["CMD-DC01-3"]
 # 3 letters, 1 dash, 2 letters, 2 digits, 1 dash, 1 digit
 lecture_pattern2 = r"[A-Z]{3}-[A-Z]{2}[0-9]{2}-[0-9]"
@@ -32,8 +32,8 @@ class_pattern1 = r"[A-Z]{2,4}[0-9]{1}[A-Z]{0,1}$"
 # 2-3 letters, maybe 1 letter, 1 dash, 2-4 alphanum, maybe 1 dash,
 class_pattern2 = r"[A-Z]{2,3}[0-9]?-\w{2,4}-?[0-9]?"
 # list = ["MINBOD02A", "MINBOD02", "MINIED1C", "MIN ENS02", "MIN IED1B", "MIN SMO", "KEU AAR01", "KEU SOU01K"]
-# 3 letters, maybe 1 space, 3 letters,  maybe (1-2 digits, maybe 1 letter)
-class_pattern3 = r"[A-Z]{3} ?[A-Z]{3}([0-9]{1,2}[A-Z]?)?"
+# starts with Min or KEU, 3 letters,  maybe (1-2 digits, maybe 1 letter)
+class_pattern3 = r"(MIN|KEU) ?[A-Z]{3}([0-9]{1,2}[A-Z]?)?"
 # list = ["CMDLABEXP", "CMDLABPT"]
 # starts with CMDLAB, 2-3 letters
 class_cmd_lab_pattern = r"CMDLAB[A-Z]{2,3}"
