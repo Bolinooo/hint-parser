@@ -19,7 +19,7 @@ def pattern_test_helper(list, pattern):
         newList.append(matched.group())
     return newList
 
-
+# tests are done with multiple correct cases and incorrect cases
 class MyRegExTest(unittest.TestCase):
     def test_teacher(self):
         list = ["ABBAM", "AMIGA", "MINUA"]
