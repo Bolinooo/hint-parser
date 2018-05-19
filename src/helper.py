@@ -56,7 +56,7 @@ def convert_json(dictionary):
 def strip_csv(csvfile):
     """
     Function to strip csv records to a new csv with unique values
-    :param csv: Initial csv file
+    :param csvfile: Initial csv file
     :return: New csv file with unique values
     """
     filename = build_filename()
@@ -65,7 +65,7 @@ def strip_csv(csvfile):
         for line in in_file:
             seen.add(line)
 
-        for line in seen:
+        for line in sorted(seen):
             out_file.write(line)
 
 

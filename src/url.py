@@ -1,5 +1,6 @@
 from collections import defaultdict
 from .helper import *
+
 import requests
 
 cfg = get_config('config.ini')
@@ -25,20 +26,21 @@ def build_responses(option):
     """
     responses = defaultdict(list)
     timedata = defaultdict(list)
+    quarter = cfg['QUARTER']['NUMBER']
 
-    for quarter in range(1, 2, 1):
-        for week in range(1, 53, 1):
-            print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
-            num = 1
-            while True:
-                url = build_url(quarter=quarter, option=option, week=week, num=num)
-                resp = get_response("{0}".format(url))
-                if resp[1] != 200:
-                    break
-                else:
-                    responses[option].append([resp[0]])
-                    timedata[option].append([quarter, week])
-                num += 1
+
+    for week in range(1, 53, 1):
+        print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
+        num = 1
+        while True:
+            url = build_url(quarter=quarter, option=option, week=week, num=num)
+            resp = get_response("{0}".format(url))
+            if resp[1] != 200:
+                break
+            else:
+                responses[option].append([resp[0]])
+                timedata[option].append([quarter, week])
+            num += 1
     print("Succesfully build dict for {option}".format(option=option))
     return responses, timedata
 
