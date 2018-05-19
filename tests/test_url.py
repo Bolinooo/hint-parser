@@ -21,19 +21,19 @@ class MyUrlTest(unittest.TestCase):
 
     def test_build_url(self):
         self.assertEqual(
-            url.build_url(quarter=3, option='teacher', week=14, num=50), self.__class__.good)
+            url.build_url(quarter=3, option='teacher', week=14, num=50), self.good)
         self.assertNotEqual(
-            url.build_url(quarter=3, option='teacher', week=14, num=50), self.__class__.bad)
+            url.build_url(quarter=3, option='teacher', week=14, num=50), self.bad)
 
     def test_get_response(self):
         self.assertTrue(
-            url.get_response(self.__class__.good), (requests.get(self.__class__.good), 200))
+            url.get_response(self.good), (requests.get(self.good), 200))
         self.assertTrue(
-            url.get_response(self.__class__.bad), (requests.get(self.__class__.bad), 404))
+            url.get_response(self.bad), (requests.get(self.bad), 404))
         self.assertNotEqual(
-            url.get_response(self.__class__.good), (requests.get(self.__class__.good), 404))
+            url.get_response(self.good), (requests.get(self.good), 404))
         self.assertNotEqual(
-            url.get_response(self.__class__.bad), (requests.get(self.__class__.bad), 200))
+            url.get_response(self.bad), (requests.get(self.bad), 200))
 
 
 if __name__ == "__main__":
