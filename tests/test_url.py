@@ -1,11 +1,7 @@
 from src import url
-from src import helper
 import requests
 
 import unittest
-
-cfg = helper.get_config('config.ini')
-sections = cfg.options('OPTIONS')
 
 
 class MyUrlTest(unittest.TestCase):
