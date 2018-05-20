@@ -1,6 +1,5 @@
 from src import url
 import requests
-
 import unittest
 
 
@@ -8,6 +7,7 @@ class MyUrlTest(unittest.TestCase):
 
     good = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/14/t/t00050.htm"
     bad = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw1/14/t/t00050.htm"
+    base_url = "http://misc.hro.nl/roosterdienst/webroosters/"
 
     def setUp(self):
         print("Testing method: {0}".format(self._testMethodName))
@@ -17,9 +17,9 @@ class MyUrlTest(unittest.TestCase):
 
     def test_build_url(self):
         self.assertEqual(
-            url.build_url(quarter=3, option='teacher', week=14, num=50), self.good)
+            url.build_url(base_url=self.__class__.base_url, quarter=3, option='teacher', week=14, num=50), self.good)
         self.assertNotEqual(
-            url.build_url(quarter=3, option='teacher', week=14, num=50), self.bad)
+            url.build_url(base_url=self.__class__.base_url, quarter=3, option='teacher', week=14, num=50), self.bad)
 
     def test_get_response(self):
         self.assertTrue(

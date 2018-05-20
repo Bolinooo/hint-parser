@@ -1,16 +1,14 @@
 from src import helper
 from src import url
-
-from datetime import datetime
+import calendar
+import time
 import unittest
-import configparser
-import os
 
 
 class MyHelperTest(unittest.TestCase):
 
-    current = datetime.now()
-    time_format = current.strftime('%d-%m')
+    timestamp = calendar.timegm(time.gmtime())
+
     test_dict = {"key1": {"key2": {"key3": "value1"}}}
 
     def setUp(self):
@@ -25,11 +23,7 @@ class MyHelperTest(unittest.TestCase):
         self.assertNotEqual(url.apply_format(3), "0003")
 
     def test_build_filename(self):
-        self.assertEqual(helper.build_filename(), 'schedule_' + self.__class__.time_format)
-
-    def test_convert_json(self):
-        helper.convert_json(self.__class__.test_dict)
-        self.assertTrue(os.path.isfile('{0}.json'.format('schedule_' + self.__class__.time_format)), True)
+        self.assertEqual(helper.build_filename(option="teacher", quarter="1"), 'teacher_q1_' + str(self.__class__.timestamp))
 
 
 if __name__ == "__main__":
