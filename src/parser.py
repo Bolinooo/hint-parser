@@ -1,14 +1,10 @@
 from .reg_ex_patterns import *
-from collections import namedtuple
-from .helper import get_config
 from bs4 import BeautifulSoup
 import datetime
 import re
 
-cfg = get_config('config.ini')
 
-
-def parse(response):
+def parse(response, option):
     """
     Function to extract data from html schedule
     :return: Parsed html in dictionary
@@ -16,56 +12,62 @@ def parse(response):
 
     soup = BeautifulSoup(response.content, 'html.parser')
 
-    title_blue = soup.find("font", {"color": "#0000FF"}).text.strip()
-    title_black = soup.find("font", {"size": "4"}).text.strip()
+    title_blue_original = soup.find("font", {"color": "#0000FF"}).text.strip()
+    title_black_original = soup.find("font", {"size": "4"}).text.strip()
+
+    title_blue_stripped = "".join(title_blue_original.split())[:-1]
+
     date = soup.find_all('font')[-1].get_text(strip=True)
+    schedule = []
 
     rows = soup.find_all('table')[0].find_all('tr', recursive=False)[1:30:2]
 
-    rowspans = {}
-    schedule = []
+    if option == 'teacher' or option == 'rooms':
+        schedule.append(
+            {'title_blue': title_blue_stripped, 'title_black': title_black_original})
+    else:
+        rowspans = {}
+        for block, row in enumerate(rows, 1):
+            daycells = row.select('> td')[1:]
+            daynum, rowspan_offset = 0, 0
+            for daynum, daycell in enumerate(daycells, 1):
+                daynum += rowspan_offset
+                while rowspans.get(daynum, 0):
+                    rowspan_offset += 1
+                    rowspans[daynum] -= 1
+                    daynum += 1
+                rowspan = (int(daycell.get('rowspan', default=2)) // 2) - 1
+                if rowspan:
+                    rowspans[daynum] = rowspan
 
-    for block, row in enumerate(rows, 1):
-        daycells = row.select('> td')[1:]
-        daynum, rowspan_offset = 0, 0
-        for daynum, daycell in enumerate(daycells, 1):
-            daynum += rowspan_offset
-            while rowspans.get(daynum, 0):
-                rowspan_offset += 1
-                rowspans[daynum] -= 1
+                texts = daycell.find_all('font')
+                if texts:
+                    info = (item.get_text(strip=True) for item in texts)
+                    seperated_info = get_separated_cell_info(info)
+                    time = convert_date(date, daynum)
+                    timetable = convert_timetable(block, block + rowspan)
+                    schedule.append({
+                        'abbrevation': title_blue_stripped,
+                        'item': title_black_original,
+                        'start_begin': timetable[0],
+                        'start_end': timetable[1],
+                        'start_block': block,
+                        'end_begin': timetable[2],
+                        'end_end': timetable[3],
+                        'end_block': block + rowspan,
+                        'daynum': daynum,
+                        'day': time[0],
+                        'date': time[1],
+                        'info': seperated_info
+                    })
+                # print(schedule)
+            while daynum < 5:
                 daynum += 1
-            rowspan = (int(daycell.get('rowspan', default=2)) // 2) - 1
-            if rowspan:
-                rowspans[daynum] = rowspan
+                if rowspans.get(daynum, 0):
+                    rowspans[daynum] -= 1
 
-            texts = daycell.find_all('font')
-            if texts:
-                info = (item.get_text(strip=True) for item in texts)
-                seperated_info = get_separated_cell_info(info)
-                time = convert_date(date, daynum)
-                timetable = convert_timetable(block, block + rowspan)
-                schedule.append({
-                    'abbrevation': title_blue,
-                    'start_begin': timetable[0],
-                    'start_end': timetable[1],
-                    'start_block': block,
-                    'end_begin': timetable[2],
-                    'end_end': timetable[3],
-                    'end_block': block + rowspan,
-                    'daynum': daynum,
-                    'day': time[0],
-                    'date': time[1],
-                    # 'info': [i for i in info]
-                    'info': seperated_info
-                })
-            # print(schedule)
-        while daynum < 5:
-            daynum += 1
-            if rowspans.get(daynum, 0):
-                rowspans[daynum] -= 1
-
-    if not schedule:
-        schedule = {}
+        if not schedule:
+            schedule = {}
 
     print("Page succesfully parsed")
     return schedule
