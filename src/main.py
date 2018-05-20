@@ -1,4 +1,3 @@
-from multiprocessing.dummy import Pool as ThreadPool
 from .parser import *
 from .url import *
 
@@ -69,7 +68,3 @@ def main():
         unique=True)
 
     print("Parser is finished. It took {seconds} seconds.".format(seconds=round(time.time() - start_time)))
-
-    # teacher = 3504
-    # classes = 2534
-    # rooms = 986
