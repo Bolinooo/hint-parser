@@ -18,9 +18,16 @@ class MyParserTest(unittest.TestCase):
         print("Succesfully tested: {0}".format(self._testMethodName))
 
     def test_convert_date(self):
-        self.assertNotEqual(parser.convert_date(self.__class__.date, 1), ('Dinsdag', '2018-04-15'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 1), ('Zondag', '2018-04-15'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 1), ('Maandag', '2018-04-15'))
         self.assertEqual(parser.convert_date(self.__class__.date, 1), ('Maandag', '2018-04-16'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 1), ('Maandag', '2018-04-17'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 1), ('Dinsdag', '2018-04-17'))
+
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 5), ('Donderdag', '2018-04-19'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 5), ('Vrijdag', '2018-04-19'))
         self.assertEqual(parser.convert_date(self.__class__.date, 5), ('Vrijdag', '2018-04-20'))
+        self.assertNotEqual(parser.convert_date(self.__class__.date, 5), ('Vrijdag', '2018-04-21'))
         self.assertNotEqual(parser.convert_date(self.__class__.date, 5), ('Zaterdag', '2018-04-21'))
 
     def test_convert_timetable(self):
@@ -70,6 +77,7 @@ class MyParserTest(unittest.TestCase):
         category = "randomKey"
         data = parser.get_category_and_result(input)
         self.assertEqual(data, None)
+
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(MyParserTest)
