@@ -1,6 +1,6 @@
 # hint-parser
 
-hint-parser is a command-line application to crawl schedule-information from the Hogeschool Rotterdam and parse it to a .json-file.
+hint-parser is a command-line application to crawl schedule-information from the Hogeschool Rotterdam and parse it to a .csv-file.
 
 ### Prerequisites
 
@@ -25,7 +25,12 @@ This application is easy to use. To run the main application apply the following
 ~& python3 run.py teacher 1
 ```
 
-## Running the tests
+### Output
+
+The output will be in .csv-format. Small start-up for .json is included, but not finished yet.
+Output for .csv per option can be set in src/main.py in the settings-dictionary.
+
+### Tests
 
 To make use of the written unittests, please apply the following command to test individual components.
 
