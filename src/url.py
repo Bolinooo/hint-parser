@@ -30,6 +30,7 @@ def build_responses(option, quarter, base_url):
         num = 1
         while True:
             url = build_url(base_url=base_url, quarter=quarter, option=option, week=week, num=num)
+            print(url)
             resp = get_response("{0}".format(url))
             if resp[1] != 200:
                 break
@@ -38,9 +39,6 @@ def build_responses(option, quarter, base_url):
                 timedata[option].append([quarter, week])
             num += 1
     print("Succesfully build dict for {option}".format(option=option))
-    print(responses)
-    print(timedata)
-
     return responses, timedata
 
 
