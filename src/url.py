@@ -19,7 +19,10 @@ def get_response(url):
 
 def build_responses(option, quarter, base_url):
     """
-    Function to build data structure of responses with statuscode 200 and side information
+    Function to build data structure of responses with status code 200 and side information
+    :param option: Option from command line
+    :param quarter: Quarter from command line
+    :param base_url: Base url from settings dictionary
     :return: Two defaultdicts, (1) containing all responses (2) containing week and quarter
     """
     responses = defaultdict(list)
@@ -45,7 +48,7 @@ def build_responses(option, quarter, base_url):
 def build_url(**kwargs):
     """
     Function to build url based on given input
-    :param kwargs: dict with following keys: option, quarter, week and num
+    :param kwargs: dict with following keys: base_url, option, quarter, week and num
     :return: constructed url string
     """
     base = kwargs['base_url']
