@@ -18,7 +18,11 @@ Please note: make sure you are using python 3 in your environment.
 This application is easy to use. To run the main application apply the following command from your project directory:
 
 ```
-~$ python3 parser-runner.py
+~$ python3 run.py 'option' 'quarter'
+```
+(example)
+```
+~& python3 run.py teacher 1
 ```
 
 ## Running the tests
