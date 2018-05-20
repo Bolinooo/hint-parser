@@ -40,11 +40,11 @@ To make use of the written unittests, please apply the following command to test
 
 Please note: Only use this command from your project directory. Do not use it from your /tests-dir.
 
-## Built With
+### Built With
 
 * [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) - Python library for screen-scraping
 * [Requests](https://maven.apache.org/) - Python HTTP library 
 
-## License
+### License
 
 This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/Bolinooo/hint-parser/blob/master/LICENSE) file for details
