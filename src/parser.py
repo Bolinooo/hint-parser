@@ -14,10 +14,9 @@ def parse(response, option):
 
     title_blue_original = soup.find("font", {"color": "#0000FF"}).text.strip()
     title_black_original = soup.find("font", {"size": "4"}).text.strip()
-
     title_blue_stripped = "".join(title_blue_original.split())[:-1]
-
     date = soup.find_all('font')[-1].get_text(strip=True)
+
     schedule = []
 
     rows = soup.find_all('table')[0].find_all('tr', recursive=False)[1:30:2]
