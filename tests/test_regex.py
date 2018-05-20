@@ -1,4 +1,4 @@
-from src import reg_ex_patterns as reg
+from src import regex_patterns as reg
 
 import unittest
 import re

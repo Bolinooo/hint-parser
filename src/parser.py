@@ -1,4 +1,4 @@
-from .reg_ex_patterns import *
+from .regex_patterns import *
 from bs4 import BeautifulSoup
 import datetime
 import re
