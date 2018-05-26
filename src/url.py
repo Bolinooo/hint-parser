@@ -17,12 +17,12 @@ def get_response(url):
     return response, response.status_code
 
 
-def build_responses(option, quarter, base_url):
+def build_responses(option, quarter, settings):
     """
     Function to build data structure of responses with status code 200 and side information
     :param option: Option from command line
     :param quarter: Quarter from command line
-    :param base_url: Base url from settings dictionary
+    :param settings: Settings dictionary
     :return: Two defaultdicts, (1) containing all responses (2) containing week and quarter
     """
     responses = defaultdict(list)
@@ -32,7 +32,7 @@ def build_responses(option, quarter, base_url):
         print("Checking for {o} in quarter {q} for week {w}".format(o=option, q=quarter, w=week))
         num = 1
         while True:
-            url = build_url(base_url=base_url, quarter=quarter, option=option, week=week, num=num)
+            url = build_url(settings=settings, quarter=quarter, option=option, week=week, num=num)
             print(url)
             resp = get_response("{0}".format(url))
             if resp[1] != 200:
@@ -48,12 +48,12 @@ def build_responses(option, quarter, base_url):
 def build_url(**kwargs):
     """
     Function to build url based on given input
-    :param kwargs: dict with following keys: base_url, option, quarter, week and num
+    :param kwargs: dict with following keys: settings, option, quarter, week and num
     :return: constructed url string
     """
-    base = kwargs['base_url']
+    base = kwargs['settings']['base_url']
     education = "CMI"
-    option = kwargs['option'][0]
+    option = kwargs['settings'][kwargs['option']]
 
     week = str(kwargs['week'])
     base_quarter = '/kw'

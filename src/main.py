@@ -16,6 +16,7 @@ def main():
     6) Convert them to dict
     7) Parse final dict to a json/csv
     """
+
     start_time = time.time()
 
     # 1 Gather command line arguments
@@ -29,17 +30,19 @@ def main():
     # 2 Set global settings
     settings = {
         'teacher': 't',
+        'schedule': 'c',
         'classes': 'c',
         'rooms': 'r',
         'base_url': "http://misc.hro.nl/roosterdienst/webroosters/",
         'teacher_items': ['title_blue', 'title_black'],
         'rooms_items': ['title_blue', 'title_black'],
-        'classes_items': ['start_date', 'start_time', 'end_date', 'end_time', 'subject', 'allday', 'building', 'floor', 'room']
+        'classes_items': ['title_blue', 'title_black'],
+        'schedule_items': ['date', 'start_time', 'end_time', 'subject', 'teacher', 'building', 'floor', 'room']
     }
     mylist = [settings[option]]
 
     # 3 Crawl all available links
-    data = [build_responses(option, quarter, settings['base_url']) for x in mylist]
+    data = [build_responses(option, quarter, settings) for x in mylist]
 
     # 4 Parse all the responses
     parsed_items = []

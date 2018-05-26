@@ -48,7 +48,7 @@ def strip_csv(csvfile, option, quarter):
     :return: New csv file with unique values
     """
     filename = build_filename(option, quarter)
-    with open(csvfile.name, 'r') as in_file, open('%s_unique.csv' % filename,'w') as out_file:
+    with open(csvfile.name, 'r') as in_file, open('data/%s_unique.csv' % filename,'w') as out_file:
         seen = set()
         for line in in_file:
             seen.add(line)
@@ -71,7 +71,7 @@ def convert_csv(**kwargs):
 
     assert type(dictionary) is dict
     filename = build_filename(option, quarter)
-    with open('%s.csv' % filename, 'w', encoding='utf-8') as csvfile:
+    with open("data/"'%s.csv' % filename, 'w', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
         for k1, v1 in dictionary.items(): # option
             for k2, v2 in v1.items(): # quarter
@@ -98,7 +98,7 @@ def extract_item(parsed_dict, settings, option, skip_empty=False):
     :return: Iterable with items that should be in row
     """
 
-    if option == 'teacher' or option == 'rooms':
+    if option != "schedule":
         possibilities = {
             'title_blue': parsed_dict.get("title_blue", "No abbrevation"),
             'title_black': parsed_dict.get("title_black", "No item")
@@ -106,18 +106,17 @@ def extract_item(parsed_dict, settings, option, skip_empty=False):
     else:
         possibilities = {
             'subject': parsed_dict["info"].get("event", parsed_dict["info"].get("lecture", "Not available")),
-            'start_date': parsed_dict.get("date", "empty"),
+            'date': parsed_dict.get("date", "empty"),
             'start_time': parsed_dict.get("start_begin", "empty"),
-            'end_date': parsed_dict.get("date", "empty"),
             'end_time': parsed_dict.get("end_end", "empty"),
             'start_block': parsed_dict.get("start_block", "empty"),
             'end_block': parsed_dict.get("end_block", "empty"),
             'building': parsed_dict["info"].get("building", "empty"),
             'floor': parsed_dict["info"].get("floor", "empty"),
             'room': parsed_dict["info"].get("room", "empty"),
+            'teacher': parsed_dict["info"].get("teacher", "empty"),
             'allday': str(True) if parsed_dict.get("start_block") is 1 and parsed_dict.get("end_block") is 15 else str(False)
         }
-
     final = []
 
     for key in settings[option + "_items"]:
