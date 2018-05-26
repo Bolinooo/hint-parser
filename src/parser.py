@@ -56,7 +56,10 @@ def parse(response, option):
                         'end_block': block + rowspan,
                         'daynum': daynum,
                         'day': time[0],
-                        'date': time[1],
+                        'date_full': time[1],
+                        'date_year': time[1][0:4],
+                        'date_month': time[1][5:7],
+                        'date_day': time[1][8:10],
                         'info': seperated_info
                     })
                 # print(schedule)

@@ -106,7 +106,10 @@ def extract_item(parsed_dict, settings, option, skip_empty=False):
     else:
         possibilities = {
             'subject': parsed_dict["info"].get("event", parsed_dict["info"].get("lecture", "Not available")),
-            'date': parsed_dict.get("date", "empty"),
+            'date_full': parsed_dict.get("date_full", "empty"),
+            'date_year': parsed_dict.get("date_year", "empty"),
+            'date_month': parsed_dict.get("date_month", "empty"),
+            'date_day': parsed_dict.get("date_day", "empty"),
             'start_time': parsed_dict.get("start_begin", "empty"),
             'end_time': parsed_dict.get("end_end", "empty"),
             'start_block': parsed_dict.get("start_block", "empty"),
