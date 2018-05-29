@@ -105,7 +105,7 @@ def extract_item(parsed_dict, settings, option, skip_empty=False):
         }
     else:
         possibilities = {
-            'subject': parsed_dict["info"].get("event", parsed_dict["info"].get("lecture", "Not available")),
+            'subject': parsed_dict["info"].get("event", "empty"),
             'date_full': parsed_dict.get("date_full", "empty"),
             'date_year': parsed_dict.get("date_year", "empty"),
             'date_month': parsed_dict.get("date_month", "empty"),
@@ -118,6 +118,7 @@ def extract_item(parsed_dict, settings, option, skip_empty=False):
             'floor': parsed_dict["info"].get("floor", "empty"),
             'room': parsed_dict["info"].get("room", "empty"),
             'teacher': parsed_dict["info"].get("teacher", "empty"),
+            'lecture': parsed_dict["info"].get("lecture", "Not available"),
             'allday': str(True) if parsed_dict.get("start_block") is 1 and parsed_dict.get("end_block") is 15 else str(False)
         }
     final = []
