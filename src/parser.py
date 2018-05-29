@@ -13,7 +13,13 @@ def parse(response, option):
     soup = BeautifulSoup(response.content, 'html.parser')
 
     title_blue_original = soup.find("font", {"color": "#0000FF"}).text.strip()
-    title_black_original = soup.find("font", {"size": "4"}).text.strip()
+
+    if option != "classes" and option != "schedule":
+        size = "4"
+    else:
+        size = "5"
+
+    title_black_original = soup.find("font", {"size": size}).text.strip()
     title_blue_stripped = "".join(title_blue_original.split())[:-1]
     date = soup.find_all('font')[-1].get_text(strip=True)
 
@@ -21,7 +27,7 @@ def parse(response, option):
 
     rows = soup.find_all('table')[0].find_all('tr', recursive=False)[1:30:2]
 
-    if option == 'teacher' or option == 'rooms':
+    if option != "schedule":
         schedule.append(
             {'title_blue': title_blue_stripped, 'title_black': title_black_original})
     else:
