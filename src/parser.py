@@ -53,7 +53,7 @@ def parse(response, option):
                     timetable = convert_timetable(block, block + rowspan)
                     schedule.append({
                         'abbrevation': title_blue_stripped,
-                        'item': title_black_original,
+                        'title': title_black_original,
                         'start_begin': timetable[0],
                         'start_end': timetable[1],
                         'start_block': block,

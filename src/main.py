@@ -39,7 +39,7 @@ def main():
         'teacher_items': ['title_blue', 'title_black'],
         'rooms_items': ['title_blue', 'title_black'],
         'classes_items': ['title_blue', 'title_black'],
-        'schedule_items': ['date_full', 'date_year', 'date_month', 'date_day', 'start_time', 'end_time', 'subject', 'teacher', 'building', 'floor', 'room']
+        'schedule_items': ['date_full', 'date_year', 'date_month', 'date_day', 'start_time', 'end_time', 'subject', 'teacher', 'building', 'floor', 'room', 'abbrevation', 'title']
     }
     mylist = [settings[option]]
 

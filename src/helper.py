@@ -105,6 +105,8 @@ def extract_item(parsed_dict, settings, option, skip_empty=False):
         }
     else:
         possibilities = {
+            'abbrevation': parsed_dict.get("abbrevation", "empty"),
+            'title': parsed_dict.get("title", "empty"),
             'subject': parsed_dict["info"].get("event", "empty"),
             'date_full': parsed_dict.get("date_full", "empty"),
             'date_year': parsed_dict.get("date_year", "empty"),
