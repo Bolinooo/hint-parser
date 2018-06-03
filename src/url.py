@@ -11,9 +11,9 @@ def get_response(url):
     :return: result of validate_response
     """
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=5, stream=True)
     except Exception as e:
-        return None
+        return None, None
     return response, response.status_code
 
 
