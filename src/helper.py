@@ -2,6 +2,7 @@ import json
 import csv
 import time
 import calendar
+import os
 
 
 def apply_format(n):
@@ -48,7 +49,7 @@ def strip_csv(csvfile, option, quarter):
     :return: New csv file with unique values
     """
     filename = build_filename(option, quarter)
-    with open(csvfile.name, 'r') as in_file, open('data/%s_unique.csv' % filename,'w') as out_file:
+    with open(csvfile.name, 'r') as in_file, open(os.path.abspath(os.path.join("output")) + "/%s_unique.csv" % filename,'w') as out_file:
         seen = set()
         for line in in_file:
             seen.add(line)
@@ -71,7 +72,7 @@ def convert_csv(**kwargs):
 
     assert type(dictionary) is dict
     filename = build_filename(option, quarter)
-    with open("data/"'%s.csv' % filename, 'w', encoding='utf-8') as csvfile:
+    with open(os.path.abspath(os.path.join("output")) + "/%s.csv" % filename, 'w', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile, delimiter=',')
         for k1, v1 in dictionary.items(): # option
             for k2, v2 in v1.items(): # quarter
