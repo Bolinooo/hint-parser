@@ -14,8 +14,6 @@ class MyUrlTest(unittest.TestCase):
     good_rooms = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw4/24/r/r00003.htm"
     bad_rooms = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw4/14/r/r00003.htm"
 
-
-
     settings = {
         'teacher': 't',
         'schedule': 'c',
@@ -62,7 +60,6 @@ class MyUrlTest(unittest.TestCase):
             url.get_response(self.good_class), (requests.get(self.good_class), 404))
         self.assertNotEqual(
             url.get_response(self.bad_class), (requests.get(self.bad_class), 200))
-
 
     def test_build_url_rooms(self):
         self.assertEqual(
