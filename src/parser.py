@@ -143,7 +143,7 @@ def convert_timetable(start, end):
     return start_begin, start_end, end_begin, end_end
 
 
-def compare_dicts(parsed_items, parsed_counters):
+def combine_dicts(parsed_items, parsed_counters):
     """
     Function to combine parsed schedule data and quarter/week-info to a single dictionary
     :param parsed_items: defaultdict with nested lists containing separated dicts with crawled data per schedule
