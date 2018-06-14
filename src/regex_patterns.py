@@ -8,7 +8,7 @@ teacher_pattern = r"[A-Z]{5}$"
 extra_info_pattern = r"[0-9]\)"
 
 # list = ["INFPRJ00-3", "TINPRJ0178","CCOCKE10R3", "INFLAB01"]
-# 6 letters, 2-4 digits, maybe(1 dash, digit) or maybe(1 letter, 1 digit)
+# negate if its starts with MIN, 6 letters, 2-4 digits, maybe(1 dash, digit) or maybe(1 letter, 1 digit)
 lecture_pattern1 = r"(?!MIN)[A-Z]{6}[0-9]{2,4}((-[0-9])|([A-Z][0-9]))?"
 # list = ["CMD-DC01-3"]
 # 3 letters, 1 dash, 2 letters, 2 digits, 1 dash, 1 digit
