@@ -176,7 +176,7 @@ def compare_dicts(parsed_items, parsed_counters):
 def get_separated_cell_info(cell_info):
     """
     Function to give each value in
-    :param cell_info: generator that behaves like an iterator
+    :param cell_info: generator that behaves like an iterator. Cell_info can contain e.g. lecture, teacher code etc.
     :return: category(key) of the reg_ex_dict and the matched value
     """
     seperated_info = {}
@@ -185,8 +185,11 @@ def get_separated_cell_info(cell_info):
         # 1. a key from reg_ex_dict
         # 2. the value of the result after executing regular expressions on info
         data = get_category_and_result(info)
+        # Some cells only has one value for example Hemelvaartsdag. get_category_and_result won't return this value.
+        # Therefore, data is None then save the info.
         if data is None:
             seperated_info["event"] = info
+        # location needs to be splitted in building, floor and room
         elif data[0] == "location":
             dotSeperatedParts = data[1].split(".")
             seperated_info["building"] = dotSeperatedParts[0]
@@ -204,7 +207,9 @@ def get_category_and_result(info):
     :param info: info is a string
     :return: category(key) of the reg_ex_dict and the matched value
     """
+    # catergory e.g. lecture
     for category in reg_ex_dict:
+        # pattern e.g. pattern1
         for pattern in reg_ex_dict[category]:
             match = re.match(pattern, info)
             if match:
