@@ -15,7 +15,7 @@ def pattern_test_helper(list, pattern):
     for item in list:
         matched = re.match(pattern, item)
         if (matched == None):
-            raise ValueError(item + ' does not match the pattern')
+            raise ValueError(item + ' does not match the pattern ' + pattern)
         newList.append(matched.group())
     return newList
 
