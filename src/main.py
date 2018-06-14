@@ -61,7 +61,7 @@ def main():
     # 6 Convert them to dict
     final = combine_dicts(parsed_items, parsed_sidedata)
 
-    # 7 Parse final dict to a json
+    # 7 Parse final dict to a csv
     convert_csv(
         dictionary=final,
         option=option,
