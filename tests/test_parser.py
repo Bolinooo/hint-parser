@@ -5,7 +5,6 @@ import unittest
 
 
 class MyParserTest(unittest.TestCase):
-
     url = "http://misc.hro.nl/roosterdienst/webroosters/CMI/kw3/16/t/t00050.htm"
     resp = requests.get(url)
     soup = BeautifulSoup(resp.content, 'html.parser')
@@ -35,7 +34,11 @@ class MyParserTest(unittest.TestCase):
         self.assertEqual(parser.convert_timetable(1, 3), ('8:30', '9:20', '10:30', '11:20'))
         self.assertNotEqual(parser.convert_timetable(1, 3), ('8:30', '9:20', '11:20', '12:10'))
 
+
     def test_seperate_cell_info(self):
+        """
+        Tables cells are replicated with an array called iterator.
+        """
         item1 = "-3"
         iterator = [item1]
         new_dict = parser.get_separated_cell_info(iterator)
@@ -49,9 +52,12 @@ class MyParserTest(unittest.TestCase):
                                     "room": "314"
                                     })
 
+        building = "WD"
+        floor = "04"
+        room = "002"
         item1 = "INFANL02-3"
         item2 = "INF1I"
-        item3 = "WD.04.002"
+        item3 = building + "." + floor + "." + room
         item4 = "492"
         item5 = "4)"
         iterator = [item1, item2, item3, item4, item5]
@@ -59,12 +65,13 @@ class MyParserTest(unittest.TestCase):
         self.assertEqual(new_dict,
                          {"lecture": item1,
                           "class": item2,
-                          "building": "WD",
-                          "floor": "04",
-                          "room": "002",
+                          "building": building,
+                          "floor": floor,
+                          "room": room,
                           "lecture_nr": item4,
                           "extra_info": item5
                           })
+
 
     def test_get_category_and_result(self):
         input = "INF2D"
