@@ -46,22 +46,22 @@ def main():
     # 3 Crawl all available links
     data = [build_responses(option, quarter, settings) for x in mylist]
 
-    # 4 Parse all the responses
     parsed_items = []
-    parsed_counters = {}
+    parsed_sidedata = {}
     for dd in data:
+        # 4 Parse all the responses
         for option, responselist in dd[0].items():
-            parsed_counters[option] = len(responselist)
+            parsed_sidedata[option] = len(responselist)
             parsed_items.append([parse(resp[0], option) for resp in responselist])
             print("Succesfully parsed all responses for {option}".format(option=option))
         # 5 Store length of list for each option
         for option, timedata in dd[1].items():
-            if len(timedata) == parsed_counters[option]:
-                parsed_counters[option] = (len(timedata), timedata)
+            if len(timedata) == parsed_sidedata[option]:
+                parsed_sidedata[option] = (len(timedata), timedata)
                 print("Succesfully stored additional data [quarter, week] for {option}".format(option=option))
 
     # 6 Convert them to dict
-    final = combine_dicts(parsed_items, parsed_counters)
+    final = combine_dicts(parsed_items, parsed_sidedata)
 
     # 7 Parse final dict to a json
     convert_csv(
