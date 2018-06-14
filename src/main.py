@@ -1,5 +1,3 @@
-from multiprocessing.pool import ThreadPool
-
 from .parser import *
 from .url import *
 
