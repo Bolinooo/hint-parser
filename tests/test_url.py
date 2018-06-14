@@ -19,8 +19,7 @@ class MyUrlTest(unittest.TestCase):
         'schedule': 'c',
         'classes': 'c',
         'rooms': 'r',
-        'base_url': "http://misc.hro.nl/roosterdienst/webroosters/",
-        'teacher_items': ['title_blue', 'title_black'],
+        'base_url': "http://misc.hro.nl/roosterdienst/webroosters/"
     }
 
     def setUp(self):
