@@ -92,6 +92,14 @@ class MyParserTest(unittest.TestCase):
                           "event": item3
                           })
 
+        building = "H"
+        floor = "5"
+        room = "314"
+        item1 = building + "." + floor + "." + room
+        iterator = [item1]
+        new_dict = parser.get_separated_cell_info(iterator)
+        self.assertNotEqual(new_dict, {"lecture": item1 })
+
     def test_get_category_and_result(self):
         input = "INF2D"
         category = "class"
